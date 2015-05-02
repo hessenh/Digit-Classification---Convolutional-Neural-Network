@@ -1,24 +1,17 @@
-import cPickle, gzip, numpy as np,Image
-from matplotlib import pyplot as plt
-
-# Load the dataset
-f = gzip.open('Dataset/mnist.pkl.gz', 'rb')
-train_set, valid_set, test_set = cPickle.load(f)
-data = train_set[0][100]
-
-newData = []
-index = 0;
-for i in range(0,28):
-	temp = []
-	for j in range(0,28):
-		temp.append(data[index])
-		index+=1
-	newData.append(temp)
-
-data = np.array(newData)
-
-imgplot = plt.imshow(data)
-plt.show()
+import loadData,cnnConvolve,generateFilters
+from matplotlib import pyplot as plt, numpy as np
 
 
-f.close()
+
+kernels = generateFilters.getKernels(1,5)
+images = loadData.getImages(1)
+
+
+#Convolve images with filters
+cImages = cnnConvolve.convolveImages(images,kernels)
+
+
+#Display the conved images
+for i in range(0,1):
+	imgplot = plt.imshow(cImages[i])
+	plt.show()
