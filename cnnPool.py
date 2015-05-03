@@ -1,11 +1,11 @@
-def cnnPool(poolDim, convolvedFeatures):
+import scipy.signal as ss,numpy as np,generateFilters as gs
 
-	numImages = size(convolvedFeatures, 4);
-	numFilters = size(convolvedFeatures, 3);
-	convolvedDim = size(convolvedFeatures, 1);
 
-	pooledFeatures = zeros(convolvedDim / poolDim, ...
-	convolvedDim / poolDim, numFilters, numImages);
+def averagePool(poolDim, convolvedFeatures):
+	kernel = gs.getAverageFilter(poolDim)
+	result = []
+	for feature in convolvedFeatures:
+		result.append(ss.convolve2d(feature, kernel, mode='valid'))
+	return result
 
 	
-

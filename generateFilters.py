@@ -16,4 +16,5 @@ def getKernels(nKernels,kernelSize):
 		filters.append(randomKernel(kernelSize))
 	return filters
 
-
+def getAverageFilter(dim):
+	return [[1]*dim]*dim
