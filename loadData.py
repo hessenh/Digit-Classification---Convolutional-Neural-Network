@@ -2,7 +2,8 @@ from sklearn.datasets import fetch_mldata
 import random
 
 mnist = fetch_mldata('MNIST original')
-
+# mnist.data
+# mnist.taget
 
 def getRandomImage():
 	r  = random.randrange(1,70000)
@@ -17,13 +18,14 @@ def getRandomImage():
 			index+=1
 		newData.append(temp)
 
-	return newData
+	return newData,mnist.target[r]
 
 
 def getImages(size):
 	images = []
+	imagesTarget = []
 	for i in range(size):
-		img = getRandomImage()
+		img,imgTarget = getRandomImage()
 		images.append(img)
-
-	return images
+		imagesTarget.append(imgTarget)
+	return images,imagesTarget

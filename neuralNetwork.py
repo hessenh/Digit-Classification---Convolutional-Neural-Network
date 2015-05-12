@@ -94,7 +94,6 @@ class BackPropegationNetwork:
 
 		return error
 
-
 	# Transfer functions
 	def sgm(self,x,Derivative=False):
 		if not Derivative:
@@ -115,7 +114,7 @@ if __name__ == "__main__":
 	lvInput = np.array([[0,0],[1,1],[0,1],[1,0]])
 	lvTarget =np.array([[0.05],[0.05],[0.95],[0.95]])
 
-	lnMax = 100000
+	lnMax = 100
 	lnErr = 1e-5
 
 	for i in range(lnMax-1):
