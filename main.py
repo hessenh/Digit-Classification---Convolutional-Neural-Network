@@ -1,6 +1,6 @@
 import loadData,cnnConvolve,generateFilters,cnnPool as pool
 from matplotlib import pyplot as plt, numpy as np
-from neuralNetwork import *
+from cnn import *
 
 
 kernels = generateFilters.getKernels(1,5)
@@ -61,40 +61,48 @@ def convertToNewFormatTarget(iList):
 
 
 def train_network(trainData,trainTarget,testData):
-	bpn = BackPropegationNetwork((2,4,1))
+	bpn = BackPropegationNetwork((5,5,3,4),(10,10,10))
 	#bpn = BackPropegationNetwork((len(trainData[0]),len(trainData[0]),15,12,len(trainTarget[0])))
-	print bpn.shape
-	print bpn.weights
+	print bpn.convolutionShape,bpn.shape
 
-	#lvInput = np.array(trainData)
-	#lvTarget = np.array(trainTarget)
-	#lvTest = np.array(testData)
-	lvInput = np.array([[0,0],[1,1],[0,1],[1,0]])
-	lvTarget =np.array([[0.05],[0.05],[0.95],[0.95]])
+	lvInput = np.array(trainData)
+	lvTarget = np.array(trainTarget)
+	lvTest = np.array(testData)
+
+	bpn.Run(lvInput[0])
+	#lvInput = np.array([[0,0],[1,1],[0,1],[1,0]])
+	#lvTarget =np.array([[0.05],[0.05],[0.95],[0.95]])
 
 	lnMax = 100000
 	lnErr = 1e-5
 
-	for i in range(lnMax-1):
-		err = bpn.TrainEpoch(lvInput,lvTarget)
-		if i%10000 == 0:
-			print "Iteration {0}\tError: {1:0.6f}".format(i,err)
-		if err <= lnErr:
-			print "Minimum error reached at iteration {0}".format(i)
-			break
-	# Display output
-	lvOutput = bpn.Run(lvInput)
-	print "Input : {0}\nOutput:{1}".format(lvInput,lvOutput)
-	print " " 
-	print bpn.weights[0]
+	# for i in range(lnMax-1):
+	# 	err = bpn.TrainEpoch(lvInput,lvTarget)
+	# 	if i%10000 == 0:
+	# 		print "Iteration {0}\tError: {1:0.6f}".format(i,err)
+	# 	if err <= lnErr:
+	# 		print "Minimum error reached at iteration {0}".format(i)
+	# 		break
+	# # Display output
+	# lvOutput = bpn.Run(lvInput)
+	# print "Input : {0}\nOutput:{1}".format(lvInput,lvOutput)
+	# print " " 
+	# print bpn.weights[0]
 
 # This is not a good way to change the format...
 inputList = convertToNewFormatInput(pooledFeauters)
-imagesTarget = convertToNewFormatTarget(imagesTarget)
+#imagesTarget = convertToNewFormatTarget(imagesTarget)
 
-testImagesData = convertToNewFormatInput(testPooledFeauters)
-testImagesTarget = convertToNewFormatTarget(testImagesTarget)
+#testImagesData = convertToNewFormatInput(testPooledFeauters)
+#testImagesTarget = convertToNewFormatTarget(testImagesTarget)
 #Get stucked..
-train_network(inputList,imagesTarget,testImagesData)
+images  = np.array([[ 1.,  1.,  1.,  1.,  1.],
+       [ 1.,  1.,  1.,  1.,  1.],
+       [ 1.,  1.,  1.,  1.,  1.],
+       [ 1.,  1.,  1.,  1.,  1.],
+       [ 1.,  1.,  1.,  1.,  1.]])
+
+
+train_network(images,imagesTarget,testImagesTarget)
 
 

@@ -28,7 +28,6 @@ class BackPropegationNetwork:
 		for (l1,l2) in zip(layerSize[:-1],layerSize[1:]):
 			self.weights.append(np.random.normal(scale=0.1,size = (l2,l1+1))) 
 
-
 	#
 	#	Run method
 	#
@@ -102,19 +101,18 @@ class BackPropegationNetwork:
 			out = self.sgm(x)
 			return out*(1-out)
 
-#
+#000
 # If run as a script, create a test object
 #
 
 if __name__ == "__main__":
-	bpn = BackPropegationNetwork((2,2,2))
-	print bpn.shape
-	print bpn.weights
+	bpn = BackPropegationNetwork((2,2,1))
+
 
 	lvInput = np.array([[0,0],[1,1],[0,1],[1,0]])
 	lvTarget =np.array([[0.05],[0.05],[0.95],[0.95]])
 
-	lnMax = 100
+	lnMax = 1
 	lnErr = 1e-5
 
 	for i in range(lnMax-1):
@@ -126,4 +124,5 @@ if __name__ == "__main__":
 			break
 	# Display output
 	lvOutput = bpn.Run(lvInput)
-	print "Input : {0}\nOutput:{1}".format(lvInput,lvOutput)
+
+	print lvOutput
