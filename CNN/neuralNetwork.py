@@ -13,39 +13,39 @@ class NeuralNetwork:
 	def addLayer(self,layer):
 		self.layers.append(layer)
 
-	def Calculate(inputVector,iCount,outputVector,oCount=0):
+	def Calculate(self,inputVector):
 		print "calc"
 
 		#
 		# Forwardpass - iterate over every layer
 		#
-		for l in range(len(layers)):
+		for l in range(len(self.layers)):
+			print self.layers[l].layerNumber
 			#
 			# First layer is input, set outputs of neurons to the input vector 	
 			#
+
 			if(l==0):
 				
 				# Iterate over every Neuron in that layer
-				for n in range(len(layers[l])):
+				for n in range(len(self.layers[l].neurons)):
 
 					# Set the output of that neuron to the input
-					layers[l][n].output = inputVector[n]
+					self.layers[l].neurons[n].output = inputVector[n]
 
 			else:
-
+				
 				# Iterate over every neuron and call calculate function
-				for n in range(len(layers[l])):
-
-					layers[l][n].Calculate()
+				#for n in range(len(self.layers[l].neurons)):
+				self.layers[l].Calculate()
 
 
 		#
 		# Set the output vector - Iterate over last layer and get output from each neuron
 		#		
-		lastLayer = len(layers[len(layers)-1])
-
+		lastLayer = len(self.layers[-1].neurons)
 		for i in range(0,lastLayer):
-			outputVector[i] = layers[lastLayer][i].output
+			self.outputVector.append(self.layers[len(self.layers)-1].neurons[i].output)
 
 
 

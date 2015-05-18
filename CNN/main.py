@@ -1,6 +1,7 @@
 from neuralNetwork import NeuralNetwork
 from nnLayer import NNLayer
 import random
+import loadData
 
 
 if __name__ == "__main__":
@@ -68,12 +69,12 @@ if __name__ == "__main__":
 				iNumWeights = fm * 26;
 
 				# Bias weight
-				layer1.neurons[fm*169+j+i*3].addConnection(iNumWeights,-1)
+				layer1.neurons[fm*169+j+i*13].addConnection(iNumWeights,0)
 				iNumWeights +=1
 
 				for k in range(0,25):
 
-					layer1.neurons[fm*169+j+i*3].addConnection(2*j+58*i+kernelTemplate[k],iNumWeights)
+					layer1.neurons[fm*169+j+i*13].addConnection(2*j+58*i+kernelTemplate[k],iNumWeights)
 					iNumWeights +=1
 
 
@@ -131,7 +132,7 @@ if __name__ == "__main__":
 				iNumWeight = fm * 26;
 
 				# Bias weight
-				layer2.neurons[fm*25+j+i*5].addConnection(iNumWeight,-1)
+				layer2.neurons[fm*25+j+i*5].addConnection(iNumWeight,0)
 				iNumWeight +=1
 
 				for k in range(0,25):
@@ -149,6 +150,7 @@ if __name__ == "__main__":
 					layer2.neurons[fm*25+j+i*5].addConnection(845 + 2*j+58*i+kernelTemplate[k],iNumWeight)
 					iNumWeight +=1
 
+	
 	# add layer to network
 	nn.addLayer(layer2)
 
@@ -183,7 +185,7 @@ if __name__ == "__main__":
 	iNumWeight = 0 # Weights are not shared in this layer
 
 	for fm in range(0,100):
-		layer3.neurons[fm].addConnection(iNumWeight,-1) #bias
+		layer3.neurons[fm].addConnection(iNumWeight,0) #bias
 		iNumWeight+=1
 
 		for i in range(0,1250):
@@ -226,7 +228,7 @@ if __name__ == "__main__":
 
 	for fm in range(0,10):
 
-		layer4.neurons[fm].addConnection(iNumWeight,-1) #bias
+		layer4.neurons[fm].addConnection(iNumWeight,0) #bias
 		iNumWeight+=1
 
 		for i in range(0,100):
@@ -245,3 +247,11 @@ if __name__ == "__main__":
 	print "Layer 3:",len(nn.layers[3].neurons)
 	print "Layer 4:",len(nn.layers[4].neurons)
 
+	print len(nn.layers[0].neurons[0].connections)
+	print len(nn.layers[1].neurons[0].connections)
+	print len(nn.layers[2].neurons[0].connections)
+	# THis is not a good thing. Have to find a way to padd the picture
+	i,t = loadData.getRandomImage()
+	nn.Calculate(i)
+	print nn.outputVector
+	print len(i)

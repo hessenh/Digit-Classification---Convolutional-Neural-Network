@@ -1,5 +1,6 @@
 from nnWeight import NNWeight
 from nnNeuron import NNNeuron
+import math
 
 class NNLayer:
 
@@ -12,6 +13,8 @@ class NNLayer:
 	def __init__(self,layerNumber):
 		self.layerNumber = layerNumber
 		self.neurons = []
+		self.connections = []
+		self.weights = []
 
 	def addNeuron(self):
 		n = NNNeuron()
@@ -23,25 +26,36 @@ class NNLayer:
 
 
 	def addWeight(self,initWeight):
-		self.weights.append(NNWeight(initWeight))
+		w = NNWeight(initWeight)
+		self.weights.append(w)
 
-	def Calculate():
-		print "NNLayer calc"
+
+
+	def Calculate(self):
+		#print "NNLayer calc"
 		#
+		print "Calculating forward pass on layerNumber",self.layerNumber
 
 		# Iterate over all neurons 
-		for n in neurons:
+		for n in range(0,len(self.neurons)):
 
-			s = 0
+			s = self.weights[self.neurons[n].connections[0].weightIndex].val
+
+			#print self.neurons[n].connections[0].weightIndex,"<",len(self.weights)
 			#
 			# Iterate over all connections 
-			for c in connections:
+			for c in range(0,len(self.neurons[n].connections)):
 				#
 				#
-				s += weights[c.weightIndex]*prevLayer.neurons[c.neuronIndex].output
+				one = self.weights[self.neurons[n].connections[c].weightIndex].val
 
+				#print len(self.prevLayer.neurons),self.neurons[n].connections[c].neuronIndex
+				#print c,len(self.neurons[n].connections)
+				two = self.prevLayer.neurons[self.neurons[n].connections[c].neuronIndex].output
+				s += one*two
+				#print s,c
 			# Update the neurons new output using sigmoid function
-			n.output = Sigmoid(s)
+			self.neurons[n].output = math.tanh(s)
 
 
 	def Backpropagate(dErr_wrt_dXn,dErr_wrt_dXnm1,learningRate):
