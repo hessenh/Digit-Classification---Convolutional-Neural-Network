@@ -41,6 +41,7 @@ class NeuralNetwork:
 		# Set the output vector - Iterate over last layer and get output from each neuron
 		#		
 		lastLayer = len(self.layers[-1].neurons)
+		self.outputVector = []
 		for i in range(0,lastLayer):
 			self.outputVector.append(self.layers[len(self.layers)-1].neurons[i].output)
 

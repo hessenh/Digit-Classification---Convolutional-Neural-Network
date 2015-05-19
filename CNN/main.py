@@ -8,7 +8,7 @@ if __name__ == "__main__":
 
 
 	# Initialize and build neural network
-	nn = NeuralNetwork(0.05)
+	nn = NeuralNetwork(0.000005)
 
 
 	#
@@ -248,10 +248,16 @@ if __name__ == "__main__":
 	print "Layer 4:",len(nn.layers[4].neurons)
 	print "\n"
 	# THis is not a good thing. Have to find a way to padd the picture
-	i,t = loadData.getRandomImage()
+	d,t = loadData.getRandomImage()
 	
-	print "Forwardpass"
-	nn.Calculate(i)
-	print "Backpropagate"
-	nn.Backpropagate(nn.outputVector,t)
-	#print nn.outputVector
+
+	for i in range(0,100):
+		#print "Forwardpass"
+		nn.Calculate(d)
+		
+		#print "Backpropagate"
+		nn.Backpropagate(nn.outputVector,t)
+
+	print nn.outputVector
+	print t
+	

@@ -64,7 +64,7 @@ class NNLayer:
 			# Get output from neuron
 			output = self.neurons[i].output
 
-			dErr_wrt_dYn.append((1-math.tanh(output)**2) * dErr_wrt_dXn[i])
+			dErr_wrt_dYn.append((1.0-math.tanh(output)**2.0)*1.0* dErr_wrt_dXn[i])
 
 
 		#
@@ -73,8 +73,11 @@ class NNLayer:
 		# and upate the differential for the corresponding weight
 		#
 		dErr_wrt_dWn = []
-		dErr_wrt_dWn.extend(range(0, 1010))
-		print dErr_wrt_dWn
+		##### 
+		#### This array is too big! Have no idea how long it should be
+		####
+		dErr_wrt_dWn.extend(range(0, 1000000))
+	
 		i = 0
 		# Over all neurons 
 		for n in self.neurons:
@@ -87,8 +90,8 @@ class NNLayer:
 				else:
 					output = self.prevLayer.neurons[c.neuronIndex].output
 
-				print c.weightIndex,len(dErr_wrt_dWn)
-				dErr_wrt_dWn[c.weightIndex] += dErr_wrt_dYn[i] *output
+				#print c.weightIndex,len(dErr_wrt_dWn)
+				dErr_wrt_dWn[c.weightIndex] += dErr_wrt_dYn[i]*1.0 *output
 				
 
 
@@ -100,8 +103,12 @@ class NNLayer:
 		# which is needed as the input value of
    		# dErr_wrt_Xn for backpropagation of the next (i.e., previous) layer
 		#
+
+		##### 
+		#### This array is too big! Have no idea how long it should be
+		####
 		dErr_wrt_dXnm1 = []
-		for i in range(0,100):
+		for i in range(0,10000):
 			dErr_wrt_dXnm1.append(0)
 		
 		i = 0
@@ -114,7 +121,7 @@ class NNLayer:
 
 				if k !=0:
 					temp =  dErr_wrt_dXnm1[k]
-					dErr_wrt_dXnm1[k] = temp + dErr_wrt_dYn[i] * self.weights[c.weightIndex].val
+					dErr_wrt_dXnm1[k] = temp + dErr_wrt_dYn[i]*1.0 * self.weights[c.weightIndex].val
 
 			i+=1
 
@@ -124,7 +131,7 @@ class NNLayer:
 		# 
 		for i in range(len(self.weights)):
 			oldValue = self.weights[i].val
-			newValue = oldValue - learningRate*dErr_wrt_dWn[i]
+			newValue = oldValue - learningRate*1.0*dErr_wrt_dWn[i]
 			self.weights[i].val = newValue
 
 		return dErr_wrt_dXnm1
