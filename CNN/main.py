@@ -8,7 +8,7 @@ if __name__ == "__main__":
 
 
 	# Initialize and build neural network
-	nn = NeuralNetwork()
+	nn = NeuralNetwork(0.05)
 
 
 	#
@@ -132,25 +132,25 @@ if __name__ == "__main__":
 				iNumWeight = fm * 26;
 
 				# Bias weight
-				layer2.neurons[fm*25+j+i*5].addConnection(iNumWeight,0)
+				layer2.neurons[fm*25+j+i*5].addConnection(0,iNumWeight)
 				iNumWeight +=1
 
 				for k in range(0,25):
 
 					layer2.neurons[fm*25+j+i*5].addConnection(	    2*j+26*i+kernelTemplate[k],iNumWeight)
 					iNumWeight +=1
-					layer2.neurons[fm*25+j+i*5].addConnection(169 + 2*j+58*i+kernelTemplate[k],iNumWeight)
+					layer2.neurons[fm*25+j+i*5].addConnection(169 + 2*j+26*i+kernelTemplate[k],iNumWeight)
 					iNumWeight +=1
-					layer2.neurons[fm*25+j+i*5].addConnection(338 + 2*j+58*i+kernelTemplate[k],iNumWeight)
+					layer2.neurons[fm*25+j+i*5].addConnection(338 + 2*j+26*i+kernelTemplate[k],iNumWeight)
 					iNumWeight +=1
-					layer2.neurons[fm*25+j+i*5].addConnection(507 + 2*j+58*i+kernelTemplate[k],iNumWeight)
+					layer2.neurons[fm*25+j+i*5].addConnection(507 + 2*j+26*i+kernelTemplate[k],iNumWeight)
 					iNumWeight +=1
-					layer2.neurons[fm*25+j+i*5].addConnection(676 + 2*j+58*i+kernelTemplate[k],iNumWeight)
+					layer2.neurons[fm*25+j+i*5].addConnection(676 + 2*j+26*i+kernelTemplate[k],iNumWeight)
 					iNumWeight +=1
-					layer2.neurons[fm*25+j+i*5].addConnection(845 + 2*j+58*i+kernelTemplate[k],iNumWeight)
+					layer2.neurons[fm*25+j+i*5].addConnection(845 + 2*j+26*i+kernelTemplate[k],iNumWeight)
 					iNumWeight +=1
 
-	
+
 	# add layer to network
 	nn.addLayer(layer2)
 
@@ -185,12 +185,12 @@ if __name__ == "__main__":
 	iNumWeight = 0 # Weights are not shared in this layer
 
 	for fm in range(0,100):
-		layer3.neurons[fm].addConnection(iNumWeight,0) #bias
+		layer3.neurons[fm].addConnection(0,iNumWeight) #bias
 		iNumWeight+=1
 
 		for i in range(0,1250):
 
-			layer3.neurons[fm].addConnection(iNumWeight,i) #bias
+			layer3.neurons[fm].addConnection(i,iNumWeight) #bias
 			iNumWeight+=1
 
 	# Add layer to network
@@ -228,30 +228,30 @@ if __name__ == "__main__":
 
 	for fm in range(0,10):
 
-		layer4.neurons[fm].addConnection(iNumWeight,0) #bias
+		layer4.neurons[fm].addConnection(0,iNumWeight) #bias
 		iNumWeight+=1
 
 		for i in range(0,100):
 
-			layer4.neurons[fm].addConnection(iNumWeight,i) #bias
+			layer4.neurons[fm].addConnection(i,iNumWeight) #bias
 			iNumWeight+=1
 
 	# Add layer to network
 	nn.addLayer(layer4)	
 
 
-
+	print "NN structure:"
 	print "Layer 0:",len(nn.layers[0].neurons)
 	print "Layer 1:",len(nn.layers[1].neurons)
 	print "Layer 2:",len(nn.layers[2].neurons)
 	print "Layer 3:",len(nn.layers[3].neurons)
 	print "Layer 4:",len(nn.layers[4].neurons)
-
-	print len(nn.layers[0].neurons[0].connections)
-	print len(nn.layers[1].neurons[0].connections)
-	print len(nn.layers[2].neurons[0].connections)
+	print "\n"
 	# THis is not a good thing. Have to find a way to padd the picture
 	i,t = loadData.getRandomImage()
+	
+	print "Forwardpass"
 	nn.Calculate(i)
-	print nn.outputVector
-	print len(i)
+	print "Backpropagate"
+	nn.Backpropagate(nn.outputVector,t)
+	#print nn.outputVector

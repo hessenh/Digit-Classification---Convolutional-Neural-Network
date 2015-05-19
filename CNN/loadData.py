@@ -16,7 +16,14 @@ def getRandomImage():
 
 	for i in range(0,29):
 		d.append(1)
-	return d,mnist.target[r]
+
+	t = []
+	for i in range(0,10):
+		if(mnist.target[r]==i):
+			t.append(1)
+		else:
+			t.append(0)
+	return d,t
 
 def getImages(size):
 	images = []
