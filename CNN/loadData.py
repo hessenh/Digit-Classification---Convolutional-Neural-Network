@@ -6,9 +6,15 @@ mnist = fetch_mldata('MNIST original')
 # mnist.taget
 
 
-
+# Returns a unique random list of "numberOfImages" images from 0,59999
 def getTrainingImageNumberList(numberOfImages):
 	return random.sample(range(59999), numberOfImages)
+
+
+# Returns a unique random list of "numberOfImages" images from 60.000,59.999
+def getTestImageNumberList(numberOfImages):
+	return random.sample(range(60000,69999), numberOfImages)
+
 
 def getImageAndTarget(index):
 	data = mnist.data[index]

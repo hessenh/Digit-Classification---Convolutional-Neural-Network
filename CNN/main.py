@@ -1,9 +1,8 @@
 from neuralNetwork import NeuralNetwork
 from nnLayer import NNLayer
 import random
-import loadData
+import loadData,visualise
 from saveWeights import saveWeights,loadWeights
-
 
 
 def initNetwork():
@@ -252,6 +251,14 @@ def initNetwork():
 	return nn
 
 
+def setWeights(nn,numberOfSet):
+	nn.layers[1].loadWeights(loadWeights("1",str(numberOfSet)))
+	nn.layers[2].loadWeights(loadWeights("2",str(numberOfSet)))
+	nn.layers[3].loadWeights(loadWeights("3",str(numberOfSet)))
+	nn.layers[4].loadWeights(loadWeights("4",str(numberOfSet)))
+
+	return nn
+
 def traingNetwork(nn,numberOfSet):
 	print "Training starting:"
 
@@ -288,16 +295,16 @@ def testNetwork(nn,numberOfSet,numberOfTest):
 
 	print "Testing starting:"
 
-	nn.layers[1].loadWeights(loadWeights("1",str(numberOfSet)))
-	nn.layers[2].loadWeights(loadWeights("2",str(numberOfSet)))
-	nn.layers[3].loadWeights(loadWeights("3",str(numberOfSet)))
-	nn.layers[4].loadWeights(loadWeights("4",str(numberOfSet)))
+	# Set weights from file
+	nn = setWeights(nn,numberOfSet)
 	
+	imageNumberList = loadData.getTestImageNumberList(numberOfTest)
+
 	correct = 0
-	for i in range(0,numberOfTest):
+	for i in range(0,len(imageNumberList)):
 
 		# Get random picture
-		d,t = loadData.getRandomImage()
+		d,t = loadData.getImageAndTarget(imageNumberList[i])
 
 		# Forward-pass
 		nn.Calculate(d)
@@ -314,11 +321,22 @@ def testNetwork(nn,numberOfSet,numberOfTest):
 
 	print "\nNumber of correct:",correct
 	print "Number of pictures",numberOfTest
-	print "Percentage",correct*1.0/numberOfTest
+	print "Percentage",(correct*1.0/numberOfTest) * 100
+
+
+def visualiseNetwork(nn,numberOfSet,numberOfTest):
+	nn = setWeights(nn,numberOfSet)
+	d,t = loadData.getImageAndTarget(30440)
+	nn.Calculate(d)
+
+	visualise.visualise(nn)
+
 
 
 nn = initNetwork()
 
-traingNetwork(nn,59999)
+#traingNetwork(nn,x)
 
-#testNetwork(nn,1000,100)
+testNetwork(nn,59999,10)
+
+#visualiseNetwork(nn,59999,10)

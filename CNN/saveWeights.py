@@ -1,10 +1,12 @@
 import pickle
 from nnWeight import NNWeight
+from os import path
 
 
 
 def saveWeights(layerNumber,numberOfTrainingData,weights):
-	outfile = open(layerNumber+"."+numberOfTrainingData+".cvs", "wb")
+	file_path = path.relpath("weights/"+numberOfTrainingData+"."+layerNumber+".cvs")
+	outfile = open(file_path, "wb")
 
 	pickle.dump(weights, outfile)
 
@@ -14,9 +16,11 @@ def saveWeights(layerNumber,numberOfTrainingData,weights):
 
 
 def loadWeights(layerNumber,numberOfTrainingData):
-	infile = open(layerNumber+"."+numberOfTrainingData+".cvs", "rb")
+	file_path = path.relpath("weights/"+numberOfTrainingData+"."+layerNumber+".cvs")
 
+	
+	infile = open(file_path, "rb")
+		
 	return pickle.load(infile)
-
-
+	
 
