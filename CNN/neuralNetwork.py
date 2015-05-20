@@ -3,15 +3,15 @@ from nnLayer import NNLayer
 class NeuralNetwork:
 
 	layers = []
-	learningRate = 0
+	learningRate = 0.001
 	outputVector = []
 
 	def __init__(self,learningRate):
 		self.learningRate = learningRate
-		print "self"
 
 	def addLayer(self,layer):
 		self.layers.append(layer)
+
 
 	def Calculate(self,inputVector):
 		#
@@ -47,6 +47,9 @@ class NeuralNetwork:
 
 
 
+
+
+
 	def Backpropagate(self,actualOutput,desiredOutput):
 
 		dErr_wrt_dXlast = []
@@ -74,8 +77,12 @@ class NeuralNetwork:
 		#
 		for i in range(iSize-1,1,-1):
 			## TODO
-			print i
 			# Second input is pointer to return value...
-			differentials[i-1] = self.layers[i].Backpropagate(differentials[i],differentials[i],self.learningRate)
+			if self.learningRate <0:
+				self.learningRate = 0.0000001
+
+			differentials[i-1] = self.layers[i].Backpropagate(differentials[i],differentials[i-1],self.learningRate)
+			#self.layers[i].Backpropagate(differentials[i],differentials[i-1],self.learningRate)
 
 
+		differentials = []

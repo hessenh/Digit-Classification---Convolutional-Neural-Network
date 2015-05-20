@@ -2,13 +2,14 @@ from neuralNetwork import NeuralNetwork
 from nnLayer import NNLayer
 import random
 import loadData
+from saveWeights import saveWeights,loadWeights
 
 
-if __name__ == "__main__":
 
+def initNetwork():
 
 	# Initialize and build neural network
-	nn = NeuralNetwork(0.000005)
+	nn = NeuralNetwork(0.001)
 
 
 	#
@@ -69,7 +70,7 @@ if __name__ == "__main__":
 				iNumWeights = fm * 26;
 
 				# Bias weight
-				layer1.neurons[fm*169+j+i*13].addConnection(iNumWeights,0)
+				layer1.neurons[fm*169+j+i*13].addConnection(-10000,iNumWeights)
 				iNumWeights +=1
 
 				for k in range(0,25):
@@ -132,7 +133,7 @@ if __name__ == "__main__":
 				iNumWeight = fm * 26;
 
 				# Bias weight
-				layer2.neurons[fm*25+j+i*5].addConnection(0,iNumWeight)
+				layer2.neurons[fm*25+j+i*5].addConnection(-10000,iNumWeight)
 				iNumWeight +=1
 
 				for k in range(0,25):
@@ -185,7 +186,7 @@ if __name__ == "__main__":
 	iNumWeight = 0 # Weights are not shared in this layer
 
 	for fm in range(0,100):
-		layer3.neurons[fm].addConnection(0,iNumWeight) #bias
+		layer3.neurons[fm].addConnection(-10000,iNumWeight) #bias
 		iNumWeight+=1
 
 		for i in range(0,1250):
@@ -228,7 +229,7 @@ if __name__ == "__main__":
 
 	for fm in range(0,10):
 
-		layer4.neurons[fm].addConnection(0,iNumWeight) #bias
+		layer4.neurons[fm].addConnection(-10000,iNumWeight) #bias
 		iNumWeight+=1
 
 		for i in range(0,100):
@@ -247,17 +248,77 @@ if __name__ == "__main__":
 	print "Layer 3:",len(nn.layers[3].neurons)
 	print "Layer 4:",len(nn.layers[4].neurons)
 	print "\n"
-	# THis is not a good thing. Have to find a way to padd the picture
-	d,t = loadData.getRandomImage()
 	
+	return nn
 
-	for i in range(0,100):
+
+def traingNetwork(nn,numberOfSet):
+	print "Training starting:"
+
+	imageNumberList = loadData.getTrainingImageNumberList(numberOfSet)
+
+	d,t = loadData.getImageAndTarget(imageNumberList[0])
+
+	for i in range(1,len(imageNumberList)):
 		#print "Forwardpass"
+		
 		nn.Calculate(d)
 		
-		#print "Backpropagate"
+
+		if(i%(numberOfSet/10)==0):
+			print "Number of iterations:",i
+			nn.learningRate -=0.000001
+		
+
 		nn.Backpropagate(nn.outputVector,t)
 
-	print nn.outputVector
-	print t
+
+		d,t = loadData.getImageAndTarget(imageNumberList[i])
+
+
+	saveWeights("1",str(numberOfSet),nn.layers[1].weights)
+	saveWeights("2",str(numberOfSet),nn.layers[2].weights)
+	saveWeights("3",str(numberOfSet),nn.layers[3].weights)
+	saveWeights("4",str(numberOfSet),nn.layers[4].weights)
+	print "Training completed. Weights are saved.\n"
+
+	return nn
+
+def testNetwork(nn,numberOfSet,numberOfTest):
+
+	print "Testing starting:"
+
+	nn.layers[1].loadWeights(loadWeights("1",str(numberOfSet)))
+	nn.layers[2].loadWeights(loadWeights("2",str(numberOfSet)))
+	nn.layers[3].loadWeights(loadWeights("3",str(numberOfSet)))
+	nn.layers[4].loadWeights(loadWeights("4",str(numberOfSet)))
 	
+	correct = 0
+	for i in range(0,numberOfTest):
+
+		# Get random picture
+		d,t = loadData.getRandomImage()
+
+		# Forward-pass
+		nn.Calculate(d)
+		
+		correctGuess = False
+		# Check if result is correct
+		if(nn.outputVector.index(max(nn.outputVector))==t.index(max(t))):
+			correct+=1
+			correctGuess = True
+
+
+		print "CNN:",nn.outputVector.index(max(nn.outputVector)),"Target:",t.index(max(t)),correctGuess
+
+
+	print "\nNumber of correct:",correct
+	print "Number of pictures",numberOfTest
+	print "Percentage",correct*1.0/numberOfTest
+
+
+nn = initNetwork()
+
+traingNetwork(nn,59999)
+
+#testNetwork(nn,1000,100)

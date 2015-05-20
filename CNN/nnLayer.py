@@ -25,6 +25,9 @@ class NNLayer:
 		self.prevLayer = layer
 
 
+	def loadWeights(self,weights):
+		self.weights = weights
+
 	def addWeight(self,initWeight):
 		w = NNWeight(initWeight)
 		self.weights.append(w)
@@ -41,7 +44,7 @@ class NNLayer:
 			s = self.weights[self.neurons[n].connections[0].weightIndex].val
 
 			# Iterate over all connections 
-			for c in range(0,len(self.neurons[n].connections)):
+			for c in range(1,len(self.neurons[n].connections)):
 				#
 				# Just divided them for better understanding
 				one = self.weights[self.neurons[n].connections[c].weightIndex].val
@@ -49,22 +52,26 @@ class NNLayer:
 				s += one*two
 
 			# Update the neurons new output using sigmoid function
-			self.neurons[n].output = math.tanh(s)
+			self.neurons[n].output = (1.7159*math.tanh(0.66666667*s));#math.tanh(s)
 
 
 	def Backpropagate(self,dErr_wrt_dXn,dErr_wrt_dXnm1,learningRate):
-		print "NNLayer back"
+		#print "NNLayer back"
 		#
 		# Calculate (3) : dErr_wrt_dYn = F'(Yn) * dErr_wrt_Xn
 		#
 		dErr_wrt_dYn = []
+		#dErr_wrt_dYn.extend(range(0,len(self.neurons)))
 
 		for i in range(0,len(self.neurons)):
 
 			# Get output from neuron
 			output = self.neurons[i].output
 
-			dErr_wrt_dYn.append((1.0-math.tanh(output)**2.0)*1.0* dErr_wrt_dXn[i])
+			t = (0.66666667/1.7159*(1.7159+(output))*(1.7159-(output)))
+			dErr_wrt_dYn.append(t* dErr_wrt_dXn[i])
+
+			#dErr_wrt_dYn.append((1.0-math.tanh(output)**2.0)* dErr_wrt_dXn[i])
 
 
 		#
@@ -76,7 +83,10 @@ class NNLayer:
 		##### 
 		#### This array is too big! Have no idea how long it should be
 		####
-		dErr_wrt_dWn.extend(range(0, 1000000))
+		for i in range(0,len(self.weights)):
+			dErr_wrt_dWn.append(0)
+		#dErr_wrt_dWn.extend(range(0, len(self.weights)))
+		#dErr_wrt_dWn.extend(range(0, 125100))
 	
 		i = 0
 		# Over all neurons 
@@ -84,14 +94,14 @@ class NNLayer:
 
 			for c in n.connections:
 
-				if c.neuronIndex==-1: #Bias node
+				if c.neuronIndex==-10000: #Bias node
 					output = 1.0
 
 				else:
 					output = self.prevLayer.neurons[c.neuronIndex].output
 
 				#print c.weightIndex,len(dErr_wrt_dWn)
-				dErr_wrt_dWn[c.weightIndex] += dErr_wrt_dYn[i]*1.0 *output
+				dErr_wrt_dWn[c.weightIndex] += dErr_wrt_dYn[i]*output
 				
 
 
@@ -108,7 +118,7 @@ class NNLayer:
 		#### This array is too big! Have no idea how long it should be
 		####
 		dErr_wrt_dXnm1 = []
-		for i in range(0,10000):
+		for i in range(0,1250):
 			dErr_wrt_dXnm1.append(0)
 		
 		i = 0
@@ -119,9 +129,9 @@ class NNLayer:
 
 				k = c.neuronIndex
 
-				if k !=0:
+				if k !=-10000:
 					temp =  dErr_wrt_dXnm1[k]
-					dErr_wrt_dXnm1[k] = temp + dErr_wrt_dYn[i]*1.0 * self.weights[c.weightIndex].val
+					dErr_wrt_dXnm1[k] += dErr_wrt_dYn[i]*self.weights[c.weightIndex].val
 
 			i+=1
 
@@ -131,7 +141,7 @@ class NNLayer:
 		# 
 		for i in range(len(self.weights)):
 			oldValue = self.weights[i].val
-			newValue = oldValue - learningRate*1.0*dErr_wrt_dWn[i]
+			newValue = oldValue - learningRate*dErr_wrt_dWn[i]
 			self.weights[i].val = newValue
 
 		return dErr_wrt_dXnm1
