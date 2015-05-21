@@ -15,7 +15,7 @@ def getTrainingImageNumberList(numberOfImages):
 def getTestImageNumberList(numberOfImages):
 	return random.sample(range(60000,69999), numberOfImages)
 
-
+# returns an image and the value of the image 0-9
 def getImageAndTarget(index):
 	data = mnist.data[index]
 	d = []
@@ -35,6 +35,7 @@ def getImageAndTarget(index):
 			t.append(-1)
 	return d,t
 
+# returns an random image from the dataset and returns its value 0-9
 def getRandomImage():
 	# Image
 	r  = random.randrange(1,70000)
@@ -57,6 +58,7 @@ def getRandomImage():
 			t.append(-1)
 	return d,t
 
+# gets the images and the targets from the dataset
 def getImages(size):
 	images = []
 	imagesTarget = []
