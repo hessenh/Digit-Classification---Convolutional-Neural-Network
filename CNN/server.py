@@ -25,6 +25,7 @@ class CNNHandler(tornado.web.RequestHandler):
 	def post(self):
 
             number = main.runCNN(cnn,self.get_argument("number"))
+            # Write to client
             self.write(str(number))
 
 

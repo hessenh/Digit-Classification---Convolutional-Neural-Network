@@ -345,28 +345,105 @@ def runCNN(nn,image):
 	fh.write(image)
 	fh.close()
 
+
+	# Downsample image
+	import PIL
+	from PIL import Image
+
+	basewidth = 29	
+	img = Image.open('imageToSave.png')
+	wpercent = (basewidth/float(img.size[0]))
+	hsize = int((float(img.size[1])*float(wpercent)))
+	img = img.resize((basewidth,hsize), PIL.Image.ANTIALIAS)
+	img.save('imageToSave.png')
+
+
+	# Load the image
+	img = matplotlib.image.imread("imageToSave.png")
+
+	c = 0
+	newimage= []
+	for i in range(len(img)):
+		#level = []
+		for j in range(len(img[i])):
+			c = 0
+			for k in range(len(img[i][j])):
+				c+= img[i][j][k]
+			newimage.append(c)
+
+
+
+	
+
+
+	padd = [0]*len(newimage)
+	for i in range(29*2,len(newimage)-29*2):
+		if(newimage[i]>0.12):
+			padd[i-1] = random.randint(50,150)
+			padd[i+1] = random.randint(50,150)
+			#padd[i-2] = 100
+			#padd[i+2] = 100
+
+			padd[i-29] = random.randint(50,150)
+			padd[i+29] = random.randint(50,150)
+			#padd[i-29*2] = 100
+			#padd[i+29*2] = 100
+
+	for i in range(len(newimage)):
+		if(newimage[i]>0.12 and newimage[i] != 150):
+			padd[i] = random.randint(240,255)
+
+	newimage = padd
+
+	d,t = loadData.getImageAndTarget(random.randint(0,60000))
+
+
+	for i in range(0,29):
+		a = []
+		for j in range(0,29):
+			a.append(d[i*29+j])
+		#print a
+
+
+	#print t.index(max(t))
+	#print " "
+	for i in range(0,29):
+		a = []
+		for j in range(0,29):
+			a.append(newimage[i*29+j])
+		#print a
+	# Forward-pass
+	nn.Calculate(newimage)
+
+
+	return nn.outputVector.index(max(nn.outputVector))
+
+def test():
 	#img =  scipy.misc.imread("imageToSave.png")
 	img = matplotlib.image.imread("imageToSave.png")
 	#img.resize((29,29))
+	c = 0
+	newimage= []
+	for i in range(len(img)):
+		level = []
+		for j in range(len(img[i])):
+			c = 0
+			for k in range(len(img[i][j])):
+				c+= img[i][j][k]
+			level.append(c)
 
-	a = np.asarray(img)
-	print len(a)
-
-
-	for i in range(0,len(a)):
-		print a[i]	
-
-
-
-
-
-
-	d,t = loadData.getImageAndTarget(random.randint(0,59999))
-	# Forward-pass
-	nn.Calculate(d)
+		newimage.append(level)
+		#print c
 	
-	return nn.outputVector.index(max(nn.outputVector))
-		
+
+
+	import matplotlib.pyplot as plt
+
+
+	plt.imshow(newimage)
+	plt.show()
+
+
 
 def visualiseNetwork(nn,numberOfSet):
 	nn = setWeights(nn,numberOfSet)
@@ -382,10 +459,12 @@ def getNetwork():
 	cnn = initNetwork()
 	cnn = setWeights(cnn,59999)
 	return cnn
+
+
 #nn = initNetwork()
 #traingNetwork(nn,x)
+#test()
 
-
-#testNetwork(nn,59999,1)
+#testNetwork(nn,59999,100)
 
 #visualiseNetwork(nn,59999)

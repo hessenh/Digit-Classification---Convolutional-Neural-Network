@@ -76,13 +76,26 @@ body {
     top: 44px;
     left: 0px;
     right: 0px;
-    bottom: 46px;
+    bottom: 500px;
     overflow:hidden;
     background-color:#ddd;
+}
+.answer{
+	margin-left: 900px;
+	margin-top: 530px;
 }
 #canvas{
     cursor:crosshair ;
     background-color:#fff;
+   	width: 290px;
+   	height: 290px;
+   	margin-top: 100px;
+   	margin-left: 800px;
+    margin-right: auto;
+}
+.checkButton{
+	margin-top: 400px;
+   	margin-left: 500px;
 }
 .palette-case {
     width:260px;
@@ -127,14 +140,14 @@ document.addEventListener( "DOMContentLoaded", function(){
 // function to setup a new canvas for drawing
 function newCanvas(){
 	//define and resize canvas
-    document.getElementById("content").style.height = window.innerHeight-90;
-    var canvas = '<canvas id="canvas" width="'+300+'" height="'+300+'"></canvas>';
+    document.getElementById("content").style.height = window.innerHeight-460;
+    var canvas = '<canvas id="canvas" width="'+290+'" height="'+290+'"></canvas>';
 	document.getElementById("content").innerHTML = canvas;
     
     // setup canvas
 	ctx=document.getElementById("canvas").getContext("2d");
 	ctx.strokeStyle = color;
-	ctx.lineWidth = 30;	
+	ctx.lineWidth = 3;	
 	
 	// setup to trigger drawing on mouse or touch
     drawTouch();
@@ -198,14 +211,14 @@ var drawMouse = function() {
 	var start = function(e) {
 		clicked = 1;
 		ctx.beginPath();
-		x = e.pageX;
-		y = e.pageY-44;
+		x = e.pageX-800;
+		y = e.pageY-144;
 		ctx.moveTo(x,y);
 	};
 	var move = function(e) {
 		if(clicked){
-			x = e.pageX;
-			y = e.pageY-44;
+			x = e.pageX-800;
+			y = e.pageY-144;
 			ctx.lineTo(x,y);
 			ctx.stroke();
 		}
@@ -222,35 +235,23 @@ var drawMouse = function() {
 <body>
 	<div id="page">
 	    <div class="header">
-			<a id="new" class="navbtn" onclick="newCanvas()">New</a>
-			<a id="send" class="navbtn">Classify</a>
-	        <div class="title">Sketch Pad</div>
+			<a id="new" class="navbtn" onclick="newCanvas()">Clear</a>
+			<a id="send" class="navbtn">Check</a>
+	        <div class="title">Convolutional Neural Network</div>
 	    </div>
-	    <div id="content"><p style="text-align:center">Loading Canvas...</p></div>
-	    <div class="footer">
-			<div class="palette-case">
-				<div class="palette-box">
-					<div class="palette white" onclick="selectColor(this)"></div>
-				</div>	
-				<div class="palette-box">
-					<div class="palette red" onclick="selectColor(this)"></div>
-				</div>
-				<div class="palette-box">
-					<div class="palette blue" onclick="selectColor(this)"></div>
-				</div>
-				<div class="palette-box">
-					<div class="palette green" onclick="selectColor(this)"></div>
-				</div>
-				<div class="palette-box">
-					<div class="palette black" onclick="selectColor(this)"></div>
-				</div>		
-				<div style="clear:both"></div>
-			</div>
+	    	<div id="content"><p style="text-align:center">Loading Canvas...</p>
+
+
+
+	    	</div>
+	    	<div class="answer">
+	    		<h1 id ="answer">CNN:</h1>
+	    		
+	    		
+	    	</div>
+	    	<div class="footer">
 	    </div>
 	</div> 
-
-	<button id="piss">Denna</button>
-
 
 </body>
 
