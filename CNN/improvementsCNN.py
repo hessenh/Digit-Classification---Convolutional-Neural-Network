@@ -1,14 +1,15 @@
 from neuralNetwork import NeuralNetwork
 from nnLayer import NNLayer
-from nnWeight import NNWeight
 import random
 import loadData,visualise
 from saveWeights import saveWeights,loadWeights
+
 
 def initNetwork():
 
 	# Initialize and build neural network
 	nn = NeuralNetwork(0.001)
+
 
 	#
 	# Layer zero, the input layer
@@ -250,7 +251,6 @@ def initNetwork():
 	return nn
 
 
-
 def setWeights(nn,numberOfSet):
 	nn.layers[1].loadWeights(loadWeights("1",str(numberOfSet)))
 	nn.layers[2].loadWeights(loadWeights("2",str(numberOfSet)))
@@ -324,15 +324,6 @@ def testNetwork(nn,numberOfSet,numberOfTest):
 	print "Percentage",(correct*1.0/numberOfTest) * 100
 
 
-def runCNN(nn,image):
-
-	d,t = loadData.getImageAndTarget(random.randint(0,59999))
-	# Forward-pass
-	nn.Calculate(d)
-	
-	return nn.outputVector.index(max(nn.outputVector))
-		
-
 def visualiseNetwork(nn,numberOfSet):
 	nn = setWeights(nn,numberOfSet)
 
@@ -343,14 +334,11 @@ def visualiseNetwork(nn,numberOfSet):
 
 
 
-def getNetwork():
-	cnn = initNetwork()
-	cnn = setWeights(cnn,59999)
-	return cnn
-#nn = initNetwork()
+nn = initNetwork()
+
 #traingNetwork(nn,x)
 
 
-#testNetwork(nn,59999,1)
+testNetwork(nn,59999,1)
 
 #visualiseNetwork(nn,59999)
