@@ -5,6 +5,13 @@ import random
 import loadData,visualise
 from saveWeights import saveWeights,loadWeights
 
+import scipy
+import base64
+import re 
+import matplotlib
+import numpy as np
+
+
 def initNetwork():
 
 	# Initialize and build neural network
@@ -325,6 +332,27 @@ def testNetwork(nn,numberOfSet,numberOfTest):
 
 
 def runCNN(nn,image):
+	image = image.replace('data:image/png;base64,','')
+	fh = open("imageToSave.png", "wb")
+	image = image.decode('base64')
+	fh.write(image)
+	fh.close()
+
+	#img =  scipy.misc.imread("imageToSave.png")
+	img = matplotlib.image.imread("imageToSave.png")
+	#img.resize((29,29))
+
+	a = np.asarray(img)
+	print len(a)
+
+
+	for i in range(0,len(a)):
+		print a[i]	
+
+
+
+
+
 
 	d,t = loadData.getImageAndTarget(random.randint(0,59999))
 	# Forward-pass

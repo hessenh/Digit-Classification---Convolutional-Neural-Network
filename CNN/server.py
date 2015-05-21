@@ -18,13 +18,13 @@ class MainHandler(tornado.web.RequestHandler):
         self.write("Hello, world")
 
     def post(self,data):
-    	self.write("9")
+        self.write("9")
 
 
 class CNNHandler(tornado.web.RequestHandler):
 	def post(self):
-            print self
-            number = main.runCNN(cnn,"hei")
+
+            number = main.runCNN(cnn,self.get_argument("number"))
             self.write(str(number))
 
 
