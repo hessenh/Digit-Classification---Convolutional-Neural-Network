@@ -10,30 +10,33 @@ class NNLayer:
 	prevLayer = None
 	layerNumber = None
 
+	# Initializes a layer and gives the layerNumber from the parameter in its constructor
 	def __init__(self,layerNumber):
 		self.layerNumber = layerNumber
 		self.neurons = []
 		self.connections = []
 		self.weights = []
 
+	# Adds a neorun into the list of neurons in the layer
 	def addNeuron(self):
 		n = NNNeuron()
 		self.neurons.append(n)
 
-
+	# Sets the previous layer
 	def setPrevLayer(self,layer):
 		self.prevLayer = layer
 
-
+	# sets the weight list with its values
 	def loadWeights(self,weights):
 		self.weights = weights
 
+	# Adds a weight into the weight list
 	def addWeight(self,initWeight):
 		w = NNWeight(initWeight)
 		self.weights.append(w)
 
 
-
+	# Calculates the forward pass in the layer
 	def Calculate(self):
 		#
 		#print "Calculating forward pass on layerNumber:",self.layerNumber
@@ -55,6 +58,7 @@ class NNLayer:
 			self.neurons[n].output = (1.7159*math.tanh(0.66666667*s));#math.tanh(s)
 
 
+	# Calculates the backpropagation for that layer
 	def Backpropagate(self,dErr_wrt_dXn,dErr_wrt_dXnm1,learningRate):
 		#print "NNLayer back"
 		#
