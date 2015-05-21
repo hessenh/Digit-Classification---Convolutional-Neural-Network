@@ -1,18 +1,15 @@
 from neuralNetwork import NeuralNetwork
 from nnLayer import NNLayer
-from nnWeight import NNWeight
 import random
 import loadData,visualise
 from saveWeights import saveWeights,loadWeights
 
+
 def initNetwork():
 
-	#
 	# Initialize and build neural network
-	# The parameter sendt in is the learningRate of ther neural network,
-	# in this case we set it to 0.001
-	#
 	nn = NeuralNetwork(0.001)
+
 
 	#
 	# Layer zero, the input layer
@@ -21,22 +18,18 @@ def initNetwork():
 	#
 	layer0 = NNLayer("layer0")
 
-	# Creates the neurons in the layer0 and adds them into the layer
 	for i in range(0,841):
 		layer0.addNeuron()
-		
-	# Adds the layer into the neural network
+	
 	nn.addLayer(layer0)
 
 	#
 	# Layer 1: Convolutional layer
 	# 6 feature maps. Each feature map is 13x13, and each unit in the feature map is a 5x5 convolutional kernel 
 	# from the input layer.
-	# So there are 13x13x6 = 1014 neurons, (5x5+1)x6 weights
+	# So there are 13x13x6 = 1014 neurons, (5x5+1)x6 wights
 	#
 	layer1 = NNLayer("layer1")
-
-	# Sets the previous layer as layer0
 	layer1.setPrevLayer(layer0)
 
 
@@ -44,7 +37,7 @@ def initNetwork():
 	for i in range(0,1014):
 		layer1.addNeuron()
 
-	# Add weights from layer0 to layer1
+	# Add wights
 	for i in range(0,156):
 		# Uniform random distribution
 		initWeight = 0.05*random.uniform(-1,1)
@@ -103,7 +96,7 @@ def initNetwork():
 	for i in range(0,1250):
 		layer2.addNeuron()
 
-	# Add weights
+	# Add wights
 	for i in range(0,7800):
 		# Uniform random distribution
 		initWeight = 0.05*random.uniform(-1,1)
@@ -166,12 +159,13 @@ def initNetwork():
 	#
 	# layer three:
     # This layer is a fully-connected layer
-    # with 100 neurons.  Since it is fully-connected,
+    # with 100 units.  Since it is fully-connected,
     # each of the 100 neurons in the
     # layer is connected to all 1250 neurons in
     # the previous layer.
     # So, there are 100 neurons and 100*(1250+1)=125100 weights
 	#
+	
 	layer3 = NNLayer("layer3")
 	layer3.setPrevLayer(layer2)
 
@@ -257,7 +251,6 @@ def initNetwork():
 	return nn
 
 
-
 def setWeights(nn,numberOfSet):
 	nn.layers[1].loadWeights(loadWeights("1",str(numberOfSet)))
 	nn.layers[2].loadWeights(loadWeights("2",str(numberOfSet)))
@@ -331,15 +324,6 @@ def testNetwork(nn,numberOfSet,numberOfTest):
 	print "Percentage",(correct*1.0/numberOfTest) * 100
 
 
-def runCNN(nn,image):
-
-	d,t = loadData.getImageAndTarget(random.randint(0,59999))
-	# Forward-pass
-	nn.Calculate(d)
-	
-	return nn.outputVector.index(max(nn.outputVector))
-		
-
 def visualiseNetwork(nn,numberOfSet):
 	nn = setWeights(nn,numberOfSet)
 
@@ -350,14 +334,11 @@ def visualiseNetwork(nn,numberOfSet):
 
 
 
-def getNetwork():
-	cnn = initNetwork()
-	cnn = setWeights(cnn,59999)
-	return cnn
-#nn = initNetwork()
+nn = initNetwork()
+
 #traingNetwork(nn,x)
 
 
-#testNetwork(nn,59999,1)
+testNetwork(nn,59999,1)
 
 #visualiseNetwork(nn,59999)
