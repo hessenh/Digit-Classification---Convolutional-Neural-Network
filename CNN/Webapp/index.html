@@ -80,9 +80,11 @@ body {
     overflow:hidden;
     background-color:#ddd;
 }
+
 .answer{
-	margin-left: 900px;
-	margin-top: 530px;
+	left: 100px;
+	margin-top: 50px;
+	position: absolute;
 }
 #canvas{
     cursor:crosshair ;
@@ -140,10 +142,21 @@ document.addEventListener( "DOMContentLoaded", function(){
 // function to setup a new canvas for drawing
 function newCanvas(){
 	//define and resize canvas
-    document.getElementById("content").style.height = window.innerHeight-460;
+    document.getElementById("content").style.height = window.innerHeight-100;
     var canvas = '<canvas id="canvas" width="'+290+'" height="'+290+'"></canvas>';
 	document.getElementById("content").innerHTML = canvas;
     
+    document.getElementById("answer").innerHTML = "Rank:";
+    document.getElementById("0").innerHTML = "";
+	document.getElementById("1").innerHTML = "";
+	document.getElementById("2").innerHTML = "";
+	document.getElementById("3").innerHTML = "";
+	document.getElementById("4").innerHTML = "";
+	document.getElementById("5").innerHTML = "";
+	document.getElementById("6").innerHTML = "";
+	document.getElementById("7").innerHTML = "";
+	document.getElementById("8").innerHTML = "";
+	document.getElementById("9").innerHTML = "";
     // setup canvas
 	ctx=document.getElementById("canvas").getContext("2d");
 	ctx.strokeStyle = color;
@@ -245,12 +258,21 @@ var drawMouse = function() {
 
 	    	</div>
 	    	<div class="answer">
-	    		<h1 id ="answer">CNN:</h1>
+	    		<h1 id ="answer">Rank:</h1>
+	    		<h2 id ="0"></h2>
+	    		<h2 id ="1"></h2>
+	    		<h2 id ="2"></h2>
+	    		<h2 id ="3"></h2>
+	    		<h2 id ="4"></h2>
+	    		<h2 id ="5"></h2>
+	    		<h2 id ="6"></h2>
+	    		<h2 id ="7"></h2>
+	    		<h2 id ="8"></h2>
+	    		<h2 id ="9"></h2>
+
 	    		
 	    		
 	    	</div>
-	    	<div class="footer">
-	    </div>
 	</div> 
 
 </body>

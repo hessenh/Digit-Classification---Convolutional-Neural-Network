@@ -339,6 +339,15 @@ def testNetwork(nn,numberOfSet,numberOfTest):
 
 
 def runCNN(nn,image):
+
+	#
+	# This method takes an image and returns the classified label of that image
+	#
+
+
+	#
+	# Converts the image to png and saves it localy
+	#
 	image = image.replace('data:image/png;base64,','')
 	fh = open("imageToSave.png", "wb")
 	image = image.decode('base64')
@@ -346,7 +355,11 @@ def runCNN(nn,image):
 	fh.close()
 
 
-	# Downsample image
+	#
+	# Downsample image to 29x29 pixels and saves it
+	#
+
+
 	import PIL
 	from PIL import Image
 
@@ -358,13 +371,17 @@ def runCNN(nn,image):
 	img.save('imageToSave.png')
 
 
+
 	# Load the image
 	img = matplotlib.image.imread("imageToSave.png")
 
+
+	#
+	# Imported images is on wrong format. [[0,0,0],[0,0,0],[0,0,0]], have to have it in one list
+	#
 	c = 0
 	newimage= []
 	for i in range(len(img)):
-		#level = []
 		for j in range(len(img[i])):
 			c = 0
 			for k in range(len(img[i][j])):
@@ -372,10 +389,26 @@ def runCNN(nn,image):
 			newimage.append(c)
 
 
+	#
+	# Since the image created digital, the image don't have the "natural" features as a handwritten image have
+	# Have to do some stuff to make it more applicable.
+	#
 
-	
+
+	# Input picture is something like this:[[0,0,0]
+	#										[0,1,0]
+	#										[0,0,0]]
+	#
+	#
+	# Output will be something like this:  [[0,   52,  0]
+	#										[102, 250, 69]
+	#										[0,   94,  0]]
+	#
 
 
+	#
+	# For every pixel with value in, the neighbours on all sides of that pixel will have a random value from 50 to 150. 
+	#
 	padd = [0]*len(newimage)
 	for i in range(29*2,len(newimage)-29*2):
 		if(newimage[i]>0.12):
@@ -389,34 +422,52 @@ def runCNN(nn,image):
 			#padd[i-29*2] = 100
 			#padd[i+29*2] = 100
 
+
 	for i in range(len(newimage)):
 		if(newimage[i]>0.12 and newimage[i] != 150):
 			padd[i] = random.randint(240,255)
 
 	newimage = padd
 
+
+	#
+	# This part is just to look how the created picture is compared to one from the training/testing set
+	#
 	d,t = loadData.getImageAndTarget(random.randint(0,60000))
 
 
-	for i in range(0,29):
-		a = []
-		for j in range(0,29):
-			a.append(d[i*29+j])
-		#print a
+	#
+	# Get better printing format for both images
+	#
+	
+	#for i in range(0,29):
+	#	a = []
+	#	for j in range(0,29):
+	#		a.append(d[i*29+j])
+	#	print a
 
 
 	#print t.index(max(t))
 	#print " "
-	for i in range(0,29):
-		a = []
-		for j in range(0,29):
-			a.append(newimage[i*29+j])
-		#print a
+	#for i in range(0,29):
+	#	a = []
+	#	for j in range(0,29):
+	#		a.append(newimage[i*29+j])
+	#	print a
+	
 	# Forward-pass
 	nn.Calculate(newimage)
 
+	#
+	# Return dictionary to server
+	#
+	sort = sorted(nn.outputVector[:])[::-1]
+	ranked = {}
+	for i in range(0,len(nn.outputVector)):
+		ranked[i] = (nn.outputVector[nn.outputVector.index(sort[i])],(nn.outputVector.index(sort[i])))
 
-	return nn.outputVector.index(max(nn.outputVector))
+	return ranked
+	#return nn.outputVector.index(max(nn.outputVector))
 
 def test():
 	#img =  scipy.misc.imread("imageToSave.png")
