@@ -45,7 +45,27 @@ def visualise(nn):
 	showLayer(nn.layers[2].neurons,5,5,10)
 
 
+#
+# To display the network to the client // BETA ;)
+# 
+def getNeuronOutputs(nn):
+	neurons = nn.layers[1].neurons
+	filterSize = 13
+	row = 2
+	col = 3
 
+	l = chunck(neurons,filterSize*filterSize)
+
+	for i in range(0,len(l)):
+		for j in range(0,len(l[i])):
+			l[i][j] = l[i][j].output
+
+	filters = []
+	for i in range(len(l)):
+		filters.append(showImage(l[i],"1",i,filterSize))
+
+
+	return filters
 
 def display(data,row,col):
 	fig = plt.figure()

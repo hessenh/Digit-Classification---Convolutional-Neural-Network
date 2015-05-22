@@ -1,0 +1,78 @@
+<html>
+<head>
+<script src="lib/jquery/dist/jquery.js"></script>
+
+<script src="js/test.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="cnn.css">
+
+</head>
+<body>
+<script type="text/javascript">
+$(document).ready(function(){
+    var imageNumberList = {}    
+
+    $("#start").click(function(e){
+
+        $.ajax({
+            url: "/CNNSTART",
+            method: "POST",
+            data:{"numberOfImages":10}
+
+
+        }).done(function(data){
+            console.log("imageNumberList is loaded")
+            imageNumberList = data
+        })
+    })
+    $("#view").click(function(e){
+
+        console.log(imageNumberList)
+    })
+    $("#image").click(function(e){
+
+        $.ajax({
+            url: "/CNNIMAGE",
+            method: "POST",
+            data:{"number":0}
+
+
+        }).done(function(data){
+            console.log("Image loaded")
+
+
+            var myCanvas = document.getElementById('imageCanvas');
+            var ctx = myCanvas.getContext('2d');
+            var img = new Image;
+            img.onload = function(){
+                ctx.drawImage(img,0,0); // Or at whatever offset you like
+            };
+            img.src = data;
+        })
+    })
+
+})
+</script>
+	<div id="page">
+	    <div class="header">
+			<a id="start" class="navbtn">Start</a>
+            <a id="view" class="navbtn">View</a>
+            <a id="image" class="navbtn">Image</a>
+	        <div class="title">Convolutional Neural Network</div>
+	    </div>
+         <canvas id="imageCanvas" width="290" height="290"></canvas>
+    	<!-- <div id="content">
+            <p style="text-align:center">Loading Canvas...</p>
+
+           
+
+
+    	</div> -->
+	</div> 
+
+</body>
+
+</html>

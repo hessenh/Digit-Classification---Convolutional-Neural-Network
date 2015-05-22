@@ -340,6 +340,7 @@ def testNetwork(nn,numberOfSet,numberOfTest):
 
 def runCNN(nn,image):
 
+	print image
 	#
 	# This method takes an image and returns the classified label of that image
 	#
@@ -469,30 +470,31 @@ def runCNN(nn,image):
 	return ranked
 	#return nn.outputVector.index(max(nn.outputVector))
 
-def test():
-	#img =  scipy.misc.imread("imageToSave.png")
-	img = matplotlib.image.imread("imageToSave.png")
-	#img.resize((29,29))
-	c = 0
-	newimage= []
-	for i in range(len(img)):
-		level = []
-		for j in range(len(img[i])):
-			c = 0
-			for k in range(len(img[i][j])):
-				c+= img[i][j][k]
-			level.append(c)
 
-		newimage.append(level)
-		#print c
+#
+# Return image of output neurons of layer to server
+#
+def getNetworkImage(nn,number):
+	d,t = loadData.getImageAndTarget(number)
+	nn.Calculate(d)
 	
+	out = visualise.getNeuronOutputs(nn)
+
+	out = np.array(out[0])
+
+	for i in range(0,len(out)):
+		
+		for j in range(0,len(out[i])):
+
+			out[i][j] = out[i][j]*100
+
+	s = base64.b64encode(out)
+	s = "data:image/png;base64,"+s
+
+	return s
 
 
-	import matplotlib.pyplot as plt
 
-
-	plt.imshow(newimage)
-	plt.show()
 
 
 
@@ -519,3 +521,8 @@ def getNetwork():
 #testNetwork(nn,59999,100)
 
 #visualiseNetwork(nn,59999)
+
+
+#nn = getNetwork()
+
+#getNetworkImage(nn,0)
