@@ -6,13 +6,19 @@ class NeuralNetwork:
 	learningRate = 0.001
 	outputVector = []
 
+	#Constructor of NeuralNetwork, it sets the learning rate from the parameter
 	def __init__(self,learningRate):
 		self.learningRate = learningRate
 
+	#
+	# Adds a layer into the network
+	#
 	def addLayer(self,layer):
 		self.layers.append(layer)
 
-
+	#
+	# Calculates the forwardpass in the network
+	#
 	def Calculate(self,inputVector):
 		#
 		# Forwardpass - iterate over every layer
@@ -49,7 +55,9 @@ class NeuralNetwork:
 
 
 
-
+	#
+	# Calculates the backpropagation of the neural network
+	#
 	def Backpropagate(self,actualOutput,desiredOutput):
 
 		dErr_wrt_dXlast = []

@@ -24,6 +24,9 @@ def showImage(data,layer,filterNumber,filterSize):
 	return n
 	#display(n)
 
+#
+# Shows the layers neurons
+#
 def showLayer(neurons,filterSize,row,col):
 	l = chunck(neurons,filterSize*filterSize)
 
@@ -37,6 +40,9 @@ def showLayer(neurons,filterSize,row,col):
 
 	display(filters,row,col)
 
+#
+# Visualises the network
+#
 def visualise(nn):
 	print "Visualising starting"
 
@@ -67,6 +73,9 @@ def getNeuronOutputs(nn):
 
 	return filters
 
+#
+# Displays the data
+#
 def display(data,row,col):
 	fig = plt.figure()
 	

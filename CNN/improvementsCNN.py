@@ -250,7 +250,9 @@ def initNetwork():
 	
 	return nn
 
-
+#
+# Sets the different weights in the different layers
+#
 def setWeights(nn,numberOfSet):
 	nn.layers[1].loadWeights(loadWeights("1",str(numberOfSet)))
 	nn.layers[2].loadWeights(loadWeights("2",str(numberOfSet)))
@@ -259,6 +261,9 @@ def setWeights(nn,numberOfSet):
 
 	return nn
 
+#
+# Training the network
+#
 def traingNetwork(nn,numberOfSet):
 	print "Training starting:"
 
@@ -290,7 +295,9 @@ def traingNetwork(nn,numberOfSet):
 	print "Training completed. Weights are saved.\n"
 
 	return nn
-
+#
+# Tests the network
+#
 def testNetwork(nn,numberOfSet,numberOfTest):
 
 	print "Testing starting:"
