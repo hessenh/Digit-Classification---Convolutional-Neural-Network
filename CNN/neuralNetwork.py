@@ -3,7 +3,7 @@ from nnLayer import NNLayer
 class NeuralNetwork:
 
 	layers = []
-	learningRate = 0.001
+	learningRate = 0.005
 	outputVector = []
 
 	#Constructor of NeuralNetwork, it sets the learning rate from the parameter

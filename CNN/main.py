@@ -312,7 +312,7 @@ def traingNetwork(nn,numberOfSet):
 #
 # Tests network
 #
-def testNetwork(nn,numberOfSet,numberOfTest):
+def testNetwork(nn,numberOfSet,numberOfTest,modification=False):
 
 	print "Testing starting:"
 
@@ -336,7 +336,6 @@ def testNetwork(nn,numberOfSet,numberOfTest):
 			correct+=1
 			correctGuess = True
 
-
 		print "CNN:",nn.outputVector.index(max(nn.outputVector)),"Target:",t.index(max(t)),correctGuess
 
 
@@ -345,6 +344,9 @@ def testNetwork(nn,numberOfSet,numberOfTest):
 	print "Percentage",(correct*1.0/numberOfTest) * 100
 
 
+#
+# Called by the python server
+#
 def runCNN(nn,image):
 
 	print image
@@ -525,15 +527,9 @@ def getNetwork():
 	return cnn
 
 
-#nn = initNetwork()
-#traingNetwork(nn,x)
-#test()
-
-#testNetwork(nn,59999,100)
-
-#visualiseNetwork(nn,59999)
+nn = initNetwork()
+#traingNetwork(nn,59999)
 
 
-#nn = getNetwork()
+testNetwork(nn,59999,100)
 
-#getNetworkImage(nn,0)
