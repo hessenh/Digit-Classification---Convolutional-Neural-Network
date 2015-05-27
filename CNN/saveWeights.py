@@ -1,5 +1,5 @@
 import pickle
-from nnWeight import NNWeight
+from weight import Weight
 from os import path
 import os
 

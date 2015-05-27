@@ -1,6 +1,6 @@
-from neuralNetwork import NeuralNetwork
-from nnLayer import NNLayer
-from nnWeight import NNWeight
+from neuralNetwork import ConvolutionalNeuralNetwork
+from layer import Layer
+from weight import Weight
 import random
 import loadData,visualise
 from saveWeights import saveWeights,loadWeights
@@ -15,20 +15,18 @@ import numpy as np
 def initNetwork():
 
 	#
-	# Initialize and build neural network
+	# Initialize neural network
 	# The parameter sendt in is the learningRate of ther neural network,
 	# in this case we set it to 0.001
 	#
-	nn = NeuralNetwork(0.001)
+	nn = ConvolutionalNeuralNetwork(0.001)
 
 	#
-	# Layer zero, the input layer
-	# Create neurons: the number of neurons is the same as the input
-	# List of 29*29=841 pixels, and no weights/connections
+	# Layer 0, the input layer
 	#
-	layer0 = NNLayer("layer0")
+	layer0 = Layer("layer0")
 
-	# Creates the neurons in the layer0 and adds them into the layer
+	# Creates the neurons in the layer0 and adds them into the layer. 
 	for i in range(0,841):
 		layer0.addNeuron()
 		
@@ -41,7 +39,7 @@ def initNetwork():
 	# from the input layer.
 	# So there are 13x13x6 = 1014 neurons, (5x5+1)x6 weights
 	#
-	layer1 = NNLayer("layer1")
+	layer1 = Layer("layer1")
 
 	# Sets the previous layer as layer0
 	layer1.setPrevLayer(layer0)
@@ -103,7 +101,7 @@ def initNetwork():
 	# So, there are 5x5x50 = 1250 neurons, (5X5+1)x6x50 = 7800 weights
 
 
-	layer2 = NNLayer("layer2")
+	layer2 = Layer("layer2")
 	layer2.setPrevLayer(layer1)
 
 	# Add the neurons
@@ -179,7 +177,7 @@ def initNetwork():
     # the previous layer.
     # So, there are 100 neurons and 100*(1250+1)=125100 weights
 	#
-	layer3 = NNLayer("layer3")
+	layer3 = Layer("layer3")
 	layer3.setPrevLayer(layer2)
 
 	# Add the neurons
@@ -219,7 +217,7 @@ def initNetwork():
     # the previous layer.
     # So, there are 10 neurons and 10*(100+1)=1010 weights
 
-	layer4 = NNLayer("layer4")
+	layer4 = Layer("layer4")
 
 	layer4.setPrevLayer(layer3)
 
@@ -288,7 +286,7 @@ def traingNetwork(nn,numberOfSet):
 	for i in range(1,len(imageNumberList)):
 		#print "Forwardpass"
 		
-		nn.Calculate(d)
+		nn.ForwardPass(d)
 		
 
 		if(i%(numberOfSet/10)==0):
@@ -328,7 +326,7 @@ def testNetwork(nn,numberOfSet,numberOfTest,modification=False):
 		d,t = loadData.getImageAndTarget(imageNumberList[i])
 
 		# Forward-pass
-		nn.Calculate(d)
+		nn.ForwardPass(d)
 		
 		correctGuess = False
 		# Check if result is correct
@@ -466,7 +464,7 @@ def runCNN(nn,image):
 	#	print a
 	
 	# Forward-pass
-	nn.Calculate(newimage)
+	nn.ForwardPass(newimage)
 
 	#
 	# Return dictionary to server
@@ -485,7 +483,7 @@ def runCNN(nn,image):
 #
 def getNetworkImage(nn,number):
 	d,t = loadData.getImageAndTarget(number)
-	nn.Calculate(d)
+	nn.ForwardPass(d)
 	
 	out = visualise.getNeuronOutputs(nn)
 
@@ -513,7 +511,7 @@ def visualiseNetwork(nn,numberOfSet):
 	nn = setWeights(nn,numberOfSet)
 
 	d,t = loadData.getImageAndTarget(random.randint(0,60000))
-	nn.Calculate(d)
+	nn.ForwardPass(d)
 
 	visualise.visualise(nn)
 
@@ -528,8 +526,8 @@ def getNetwork():
 
 
 nn = initNetwork()
-traingNetwork(nn,1000)
+traingNetwork(nn,10)
 
 
-testNetwork(nn,1000,100)
+testNetwork(nn,10,10)
 

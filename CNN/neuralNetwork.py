@@ -1,12 +1,12 @@
-from nnLayer import NNLayer
+from layer import Layer
 
-class NeuralNetwork:
+class ConvolutionalNeuralNetwork:
 
 	layers = []
 	learningRate = 0.001
 	outputVector = []
 
-	#Constructor of NeuralNetwork, it sets the learning rate from the parameter
+	#Constructor of ConvolutionalNeuralNetwork, it sets the learning rate from the parameter
 	def __init__(self,learningRate):
 		self.learningRate = learningRate
 
@@ -17,9 +17,9 @@ class NeuralNetwork:
 		self.layers.append(layer)
 
 	#
-	# Calculates the forwardpass in the network
+	# ForwardPasss the forwardpass in the network
 	#
-	def Calculate(self,inputVector):
+	def ForwardPass(self,inputVector):
 		#
 		# Forwardpass - iterate over every layer
 		#
@@ -38,9 +38,9 @@ class NeuralNetwork:
 
 			else:
 				
-				# Iterate over every neuron and call calculate function
+				# Iterate over every neuron and call ForwardPass function
 				#for n in range(len(self.layers[l].neurons)):
-				self.layers[l].Calculate()
+				self.layers[l].ForwardPass()
 
 
 		#
@@ -56,7 +56,7 @@ class NeuralNetwork:
 
 
 	#
-	# Calculates the backpropagation of the neural network
+	# Calculate the backpropagation of the neural network
 	#
 	def Backpropagate(self,actualOutput,desiredOutput):
 
@@ -84,7 +84,7 @@ class NeuralNetwork:
 		# Iterate through all but the first layer and run backpropagate on each layer
 		#
 		for i in range(iSize-1,1,-1):
-			## TODO
+
 			# Second input is pointer to return value...
 			if self.learningRate <0:
 				self.learningRate = 0.0000001
