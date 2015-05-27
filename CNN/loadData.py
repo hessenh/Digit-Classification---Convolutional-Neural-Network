@@ -21,8 +21,8 @@ def getImageAndTarget(index):
 	d = []
 	for i in range(0,len(data)):
 		d.append(data[i])
-		if(i%28==0):
-			d.append(1)
+		if(i%28==27):
+			d.append(0)
 
 	for i in range(0,29):
 		d.append(1)
@@ -69,4 +69,10 @@ def getImages(size):
 	return images,imagesTarget
 
 
-	
+
+def printImage(d):
+	for i in range(0,29):
+			a = []
+			for j in range(0,29):
+				a.append(d[i*29+j])
+			print a

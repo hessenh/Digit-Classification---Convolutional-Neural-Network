@@ -55,12 +55,12 @@ class NNLayer:
 				s += one*two
 
 			# Update the neurons new output using sigmoid function
-			self.neurons[n].output = (1.7159*math.tanh(0.66666667*s));#math.tanh(s)
+			self.neurons[n].output = (1.7159*math.tanh((2.0/3.0)*s));#math.tanh(s)
 
 
 	# Calculates the backpropagation for that layer
 	def Backpropagate(self,dErr_wrt_dXn,dErr_wrt_dXnm1,learningRate):
-		#print "NNLayer back"
+
 		#
 		# Calculate (3) : dErr_wrt_dYn = F'(Yn) * dErr_wrt_Xn
 		#
@@ -72,7 +72,11 @@ class NNLayer:
 			# Get output from neuron
 			output = self.neurons[i].output
 
-			t = (0.66666667/1.7159*(1.7159+(output))*(1.7159-(output)))
+
+			#
+			# Is this correct? 
+			# 
+			t = ((2.0/3.0)/1.7159*(1.7159+(output))*(1.7159-(output)))
 			dErr_wrt_dYn.append(t* dErr_wrt_dXn[i])
 
 			#dErr_wrt_dYn.append((1.0-math.tanh(output)**2.0)* dErr_wrt_dXn[i])

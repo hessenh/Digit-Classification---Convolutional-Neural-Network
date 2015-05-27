@@ -293,7 +293,7 @@ def traingNetwork(nn,numberOfSet):
 
 		if(i%(numberOfSet/10)==0):
 			print "Number of iterations:",i
-			nn.learningRate -=0.000001
+			nn.learningRate -=0.00001
 		
 
 		nn.Backpropagate(nn.outputVector,t)
@@ -528,8 +528,8 @@ def getNetwork():
 
 
 nn = initNetwork()
-#traingNetwork(nn,59999)
+traingNetwork(nn,1000)
 
 
-testNetwork(nn,59999,100)
+testNetwork(nn,1000,100)
 
