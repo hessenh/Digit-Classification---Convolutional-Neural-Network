@@ -1,0 +1,24 @@
+Number of iterations: 59990
+Time: 
+Learningrate: 0.005
+
+Number of correct: 956
+Number of pictures 1000
+Percentage 95.6
+[Finished in 217.1s]
+
+
+Number of correct: 961
+Number of pictures 1000
+Percentage 96.1
+[Finished in 224.6s]
+
+Number of correct: 957
+Number of pictures 1000
+Percentage 95.7
+[Finished in 232.2s]
+
+Number of correct: 957
+Number of pictures 1000
+Percentage 95.7
+[Finished in 228.2s]

@@ -1,4 +1,4 @@
-from weight import Weight
+from nnWeight import NNWeight
 from neuron import Neuron
 import math
 
@@ -32,7 +32,7 @@ class Layer:
 
 	# Adds a weight into the weight list
 	def addWeight(self,initWeight):
-		w = Weight(initWeight)
+		w = NNWeight(initWeight)
 		self.weights.append(w)
 
 
@@ -58,14 +58,13 @@ class Layer:
 			self.neurons[n].output = (1.7159*math.tanh((2.0/3.0)*s));#math.tanh(s)
 
 
-	# ForwardPasss the backpropagation for that layer
+	# Calc the backpropagation for that layer
 	def Backpropagate(self,dErr_wrt_dXn,dErr_wrt_dXnm1,learningRate):
 
 		#
-		# ForwardPass (3) : dErr_wrt_dYn = F'(Yn) * dErr_wrt_Xn
+		# Calc (3) : dErr_wrt_dYn = F'(Yn) * dErr_wrt_Xn
 		#
 		dErr_wrt_dYn = []
-		#dErr_wrt_dYn.extend(range(0,len(self.neurons)))
 
 		for i in range(0,len(self.neurons)):
 
@@ -76,15 +75,15 @@ class Layer:
 			#
 			# Is this correct? 
 			# 
-			t = ((2.0/3.0)/1.7159*(1.7159+(output))*(1.7159-(output)))
-			dErr_wrt_dYn.append(t* dErr_wrt_dXn[i])
+			#t = ((2.0/3.0)/1.7159*(1.7159+(output))*(1.7159-(output)))
+			#dErr_wrt_dYn.append(t* dErr_wrt_dXn[i])
 
-			#dErr_wrt_dYn.append((1.0-math.tanh(output)**2.0)* dErr_wrt_dXn[i])
+			dErr_wrt_dYn.append((1.0-math.tanh(output))* dErr_wrt_dXn[i])
 
 
 		#
-		# ForwardPass (4) : dErr_wrt_Wn = Xnm1 * dErr_wrt_Yn
-		# For each neuraon in the layer go through the list of connections from the prior layer,
+		# Calc (4) : dErr_wrt_Wn = Xnm1 * dErr_wrt_Yn
+		# For each neuron in the layer go through the list of connections from the prior layer,
 		# and upate the differential for the corresponding weight
 		#
 		dErr_wrt_dWn = []
@@ -93,8 +92,6 @@ class Layer:
 		####
 		for i in range(0,len(self.weights)):
 			dErr_wrt_dWn.append(0)
-		#dErr_wrt_dWn.extend(range(0, len(self.weights)))
-		#dErr_wrt_dWn.extend(range(0, 125100))
 	
 		i = 0
 		# Over all neurons 
@@ -117,7 +114,7 @@ class Layer:
 
 
 		#
-		# ForwardPass (5) : dErr_wrt_Xnm1 = Wn * dErr_wrt_dYn
+		# Calc (5) : dErr_wrt_Xnm1 = Wn * dErr_wrt_dYn
 		# which is needed as the input value of
    		# dErr_wrt_Xn for backpropagation of the next (i.e., previous) layer
 		#
@@ -145,7 +142,7 @@ class Layer:
 
 
 		#
-		# ForwardPass (6) : Upate the weights 
+		# Calculate (6) : Upate the weights 
 		# 
 		for i in range(len(self.weights)):
 			oldValue = self.weights[i].val

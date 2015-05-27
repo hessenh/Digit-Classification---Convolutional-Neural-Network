@@ -1,0 +1,11 @@
+Statistics: 
+
+
+Number of iterations: 59990
+Time: 26513.5s = 7.36.0h
+Learningrate: 0.001
+
+Testing: 
+Number of correct: 967
+Number of pictures 1000
+Percentage 0.967

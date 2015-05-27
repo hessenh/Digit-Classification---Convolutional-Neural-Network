@@ -1,6 +1,6 @@
 from neuralNetwork import ConvolutionalNeuralNetwork
 from layer import Layer
-from weight import Weight
+from nnWeight import NNWeight
 import random
 import loadData,visualise
 from saveWeights import saveWeights,loadWeights
@@ -526,8 +526,11 @@ def getNetwork():
 
 
 nn = initNetwork()
-traingNetwork(nn,10)
+#traingNetwork(nn,1000)
 
 
-testNetwork(nn,10,10)
+testNetwork(nn,1000,1000)
+
+
+
 
