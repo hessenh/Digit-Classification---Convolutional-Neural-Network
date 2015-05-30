@@ -12,8 +12,16 @@ import matplotlib
 import numpy as np
 
 
-def initNetwork():
+def initNetwork(nk1,nk2,nN3):
 
+	numKernelOne = nk1
+	numKernelTwo = nk2
+
+	numNeuronsThree = nN3
+	numNeuronsFour= 10
+
+
+	#nN0,nN1,nN2,nN3
 	#
 	# Initialize neural network
 	# The parameter sendt in is the learningRate of ther neural network,
@@ -24,10 +32,12 @@ def initNetwork():
 	#
 	# Layer 0, the input layer
 	#
-	layer0 = Layer("layer0")
+	numNeuronsZero = 841
+	layer0 = Layer("layer0",numNeuronsZero)
+
 
 	# Creates the neurons in the layer0 and adds them into the layer. 
-	for i in range(0,841):
+	for i in range(0,numNeuronsZero):
 		layer0.addNeuron()
 		
 	# Adds the layer into the neural network
@@ -39,18 +49,21 @@ def initNetwork():
 	# from the input layer.
 	# So there are 13x13x6 = 1014 neurons, (5x5+1)x6 weights
 	#
-	layer1 = Layer("layer1")
+	numNeuronsOne = 13*13*numKernelOne
+	numWeightsOne = (5*5+1)*numKernelOne
+
+	layer1 = Layer("layer1",numNeuronsOne)
 
 	# Sets the previous layer as layer0
 	layer1.setPrevLayer(layer0)
 
 
 	# Add the neurons
-	for i in range(0,1014):
+	for i in range(0,numNeuronsOne):
 		layer1.addNeuron()
 
 	# Add weights from layer0 to layer1
-	for i in range(0,156):
+	for i in range(0,numWeightsOne):
 		# Uniform random distribution
 		initWeight = 0.05*random.uniform(-1,1)
 
@@ -71,7 +84,7 @@ def initNetwork():
 	kernelTemplate = [0,1,2,3,4,29,30,31,32,33,58,59,60,61,62,87,88,89,90,91,116,117,118,119,120]
 
 	#Feature maps
-	for fm in range(0,6):
+	for fm in range(0,numKernelOne):
 
 		for i in range(0,13):
 
@@ -100,16 +113,20 @@ def initNetwork():
 	# corresponding areas of all 6 of the previous layers, each of which is a 13x13 feature map. 
 	# So, there are 5x5x50 = 1250 neurons, (5X5+1)x6x50 = 7800 weights
 
+	numNeuronsTwo = 5*5*numKernelTwo
+	numWeightsTwo = (5*5+1)*numKernelTwo*numKernelOne
 
-	layer2 = Layer("layer2")
+	layer2 = Layer("layer2",numNeuronsTwo)
+
+
 	layer2.setPrevLayer(layer1)
 
 	# Add the neurons
-	for i in range(0,1250):
+	for i in range(0,numNeuronsTwo):
 		layer2.addNeuron()
 
 	# Add weights
-	for i in range(0,7800):
+	for i in range(0,numWeightsTwo):
 		# Uniform random distribution
 		initWeight = 0.05*random.uniform(-1,1)
 
@@ -134,7 +151,7 @@ def initNetwork():
 	kernelTemplate = [0,  1,  2,  3,  4,13, 14, 15, 16, 17, 26, 27, 28, 29, 30,39, 40, 41, 42, 43, 52, 53, 54, 55, 56 ]
 
 
-	for fm in range(0,50):
+	for fm in range(0,numKernelTwo):
 
 		for i in range(0,5):
 
@@ -149,18 +166,31 @@ def initNetwork():
 
 				for k in range(0,25):
 
-					layer2.neurons[fm*25+j+i*5].addConnection(	    2*j+26*i+kernelTemplate[k],iNumWeight)
-					iNumWeight +=1
-					layer2.neurons[fm*25+j+i*5].addConnection(169 + 2*j+26*i+kernelTemplate[k],iNumWeight)
-					iNumWeight +=1
-					layer2.neurons[fm*25+j+i*5].addConnection(338 + 2*j+26*i+kernelTemplate[k],iNumWeight)
-					iNumWeight +=1
-					layer2.neurons[fm*25+j+i*5].addConnection(507 + 2*j+26*i+kernelTemplate[k],iNumWeight)
-					iNumWeight +=1
-					layer2.neurons[fm*25+j+i*5].addConnection(676 + 2*j+26*i+kernelTemplate[k],iNumWeight)
-					iNumWeight +=1
-					layer2.neurons[fm*25+j+i*5].addConnection(845 + 2*j+26*i+kernelTemplate[k],iNumWeight)
-					iNumWeight +=1
+
+					for f in range(0,numKernelOne):
+						layer2.neurons[fm*25+j+i*5].addConnection(169*f+ 2*j+26*i+kernelTemplate[k],iNumWeight)
+						iNumWeight +=1
+
+					# layer2.neurons[fm*25+j+i*5].addConnection(	    2*j+26*i+kernelTemplate[k],iNumWeight)
+					# iNumWeight +=1
+					# layer2.neurons[fm*25+j+i*5].addConnection(169 + 2*j+26*i+kernelTemplate[k],iNumWeight)
+					# iNumWeight +=1
+					# layer2.neurons[fm*25+j+i*5].addConnection(338 +  2*j+26*i+kernelTemplate[k],iNumWeight)
+					# iNumWeight +=1
+					# layer2.neurons[fm*25+j+i*5].addConnection(507 + 2*j+26*i+kernelTemplate[k],iNumWeight)
+					# iNumWeight +=1
+					# layer2.neurons[fm*25+j+i*5].addConnection(676 +  2*j+26*i+kernelTemplate[k],iNumWeight)
+					# iNumWeight +=1
+					# layer2.neurons[fm*25+j+i*5].addConnection(856 + 2*j+26*i+kernelTemplate[k],iNumWeight)
+					# iNumWeight +=1
+					# layer2.neurons[fm*25+j+i*5].addConnection(1014 +  2*j+26*i+kernelTemplate[k],iNumWeight)
+					# iNumWeight +=1
+					# layer2.neurons[fm*25+j+i*5].addConnection(1183 + 2*j+26*i+kernelTemplate[k],iNumWeight)
+					# iNumWeight +=1
+					# layer2.neurons[fm*25+j+i*5].addConnection(1352 + 2*j+26*i+kernelTemplate[k],iNumWeight)
+					# iNumWeight +=1
+					# layer2.neurons[fm*25+j+i*5].addConnection(1521 + 2*j+26*i+kernelTemplate[k],iNumWeight)
+					# iNumWeight +=1
 
 
 	# add layer to network
@@ -177,15 +207,20 @@ def initNetwork():
     # the previous layer.
     # So, there are 100 neurons and 100*(1250+1)=125100 weights
 	#
-	layer3 = Layer("layer3")
+	
+	numWeightsThree = numNeuronsThree*(numNeuronsTwo+1)
+	
+	layer3 = Layer("layer3",numNeuronsThree)
+
+
 	layer3.setPrevLayer(layer2)
 
 	# Add the neurons
-	for i in range(0,100):
+	for i in range(0,numNeuronsThree):
 		layer3.addNeuron()
 
 	# Add wights
-	for i in range(0,125100):
+	for i in range(0,numWeightsThree):
 		# Uniform random distribution
 		initWeight = 0.05*random.uniform(-1,1)
 
@@ -195,11 +230,11 @@ def initNetwork():
 
 	iNumWeight = 0 # Weights are not shared in this layer
 
-	for fm in range(0,100):
+	for fm in range(0,numNeuronsThree):
 		layer3.neurons[fm].addConnection(-10000,iNumWeight) #bias
 		iNumWeight+=1
 
-		for i in range(0,1250):
+		for i in range(0,numNeuronsTwo):
 
 			layer3.neurons[fm].addConnection(i,iNumWeight) #bias
 			iNumWeight+=1
@@ -217,17 +252,21 @@ def initNetwork():
     # the previous layer.
     # So, there are 10 neurons and 10*(100+1)=1010 weights
 
-	layer4 = Layer("layer4")
+	
+	numWeightsFour = numNeuronsFour*(numWeightsThree+1)
+
+	layer4 = Layer("layer4",numNeuronsFour)
+
 
 	layer4.setPrevLayer(layer3)
 
 
 	# Add the neurons
-	for i in range(0,10):
+	for i in range(0,numNeuronsFour):
 		layer4.addNeuron()
 
 	# Add wights
-	for i in range(0,1010):
+	for i in range(0,numWeightsFour):
 		# Uniform random distribution
 		initWeight = 0.05*random.uniform(-1,1)
 
@@ -237,12 +276,12 @@ def initNetwork():
 
 	iNumWeight = 0 # Weights are not shared in this layer
 
-	for fm in range(0,10):
+	for fm in range(0,numNeuronsFour):
 
 		layer4.neurons[fm].addConnection(-10000,iNumWeight) #bias
 		iNumWeight+=1
 
-		for i in range(0,100):
+		for i in range(0,numNeuronsThree):
 
 			layer4.neurons[fm].addConnection(i,iNumWeight) #bias
 			iNumWeight+=1
@@ -293,6 +332,27 @@ def traingNetwork(nn,numberOfSet):
 			print "Number of iterations:",i
 			nn.learningRate -=0.00001
 		
+		if(i==5000):
+			saveWeights("1",str(5000),nn.layers[1].weights)
+			saveWeights("2",str(5000),nn.layers[2].weights)
+			saveWeights("3",str(5000),nn.layers[3].weights)
+			saveWeights("4",str(5000),nn.layers[4].weights)
+			print "Weights are saved - 5.000.\n"
+
+
+		if(i==10000):
+			saveWeights("1",str(10000),nn.layers[1].weights)
+			saveWeights("2",str(10000),nn.layers[2].weights)
+			saveWeights("3",str(10000),nn.layers[3].weights)
+			saveWeights("4",str(10000),nn.layers[4].weights)
+			print "Weights are saved - 10.000.\n"
+
+		if(i==30000):
+			saveWeights("1",str(30000),nn.layers[1].weights)
+			saveWeights("2",str(30000),nn.layers[2].weights)
+			saveWeights("3",str(30000),nn.layers[3].weights)
+			saveWeights("4",str(30000),nn.layers[4].weights)
+			print "Weights are saved - 30.000.\n"
 
 		nn.Backpropagate(nn.outputVector,t)
 
@@ -525,12 +585,12 @@ def getNetwork():
 	return cnn
 
 
-nn = initNetwork()
-#traingNetwork(nn,1000)
+nn = initNetwork(6,20,50)
+trainingSize = 100
+traingNetwork(nn,trainingSize)
 
 
-testNetwork(nn,1000,1000)
-
+testNetwork(nn,trainingSize,1000)
 
 
 

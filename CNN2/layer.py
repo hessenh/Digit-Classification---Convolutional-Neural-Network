@@ -9,9 +9,11 @@ class Layer:
 	weights = []
 	prevLayer = None
 	layerNumber = None
+	numNeurons = 0
 
 	# Initializes a layer and gives the layerNumber from the parameter in its constructor
-	def __init__(self,layerNumber):
+	def __init__(self,layerNumber,numNeurons):
+		self.numNeurons = numNeurons
 		self.layerNumber = layerNumber
 		self.neurons = []
 		self.connections = []
