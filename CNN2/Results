@@ -1,0 +1,252 @@
+Results:
+
+NN structure:
+Layer 0: 841
+Layer 1: 1690
+Layer 2: 2000
+Layer 3: 100
+Layer 4: 10
+
+Data:1000
+
+Number of correct: 824
+Number of pictures 1000
+Percentage 82.4
+
+Number of correct: 819
+Number of pictures 1000
+Percentage 81.9
+[Finished in 503.0s]
+
+
+Data:500
+
+Number of correct: 750
+Number of pictures 1000
+Percentage 75.0
+
+Number of correct: 743
+Number of pictures 1000
+Percentage 74.3
+[Finished in 501.5s]
+
+Data: 100
+
+Number of correct: 327
+Number of pictures 1000
+Percentage 32.7
+
+Number of correct: 330
+Number of pictures 1000
+Percentage 33.0
+[Finished in 517.3s]
+
+Data: 10
+Number of correct: 18
+Number of pictures 100
+Percentage 18.0
+[Finished in 125.2s]
+
+Number of correct: 13
+Number of pictures 100
+Percentage 13.0
+[Finished in 78.2s]
+
+
+
+
+
+
+####################################
+4-20-100-10
+
+NN structure:
+Layer 0: 841
+Layer 1: 676
+Layer 2: 500
+Layer 3: 100
+Layer 4: 10
+[Finished in 15276.1s]
+
+Data:59999
+Number of correct: 937
+Number of pictures 1000
+Percentage 93.7
+
+Number of correct: 942
+Number of pictures 1000
+Percentage 94.2
+
+
+Data:30000
+Number of correct: 932
+Number of pictures 1000
+Percentage 93.2
+
+Number of correct: 936
+Number of pictures 1000
+Percentage 93.6
+
+
+Data:10000
+[Finished in 3370.4s]
+
+Number of correct: 890
+Number of pictures 1000
+Percentage 89.0
+
+Number of correct: 880
+Number of pictures 1000
+Percentage 88.0
+
+Number of correct: 896
+Number of pictures 1000
+Percentage 89.6
+
+Data:5000
+Number of correct: 869
+Number of pictures 1000
+Percentage 86.9
+
+Number of correct: 869
+Number of pictures 1000
+Percentage 86.9
+
+
+Data:1000
+Number of correct: 750
+Number of pictures 1000
+Percentage 75.0
+
+Number of correct: 730
+Number of pictures 1000
+Percentage 73.0
+
+
+Data:100
+Number of correct: 123
+Number of pictures 1000
+Percentage 12.3
+
+Number of correct: 133
+Number of pictures 1000
+Percentage 13.3
+
+######################
+2-5-10-10
+
+NN structure:
+Layer 0: 841
+Layer 1: 338
+Layer 2: 125
+Layer 3: 10
+Layer 4: 10
+
+
+Learningrate=0.001
+
+Data:10000
+[Finished in 434.9s]
+Number of correct: 774
+Number of pictures 1000
+Percentage 77.4
+
+Number of correct: 780
+Number of pictures 1000
+Percentage 78.0
+
+
+Data:1000
+
+Number of correct: 290
+Number of pictures 1000
+Percentage 29.0
+
+
+
+
+
+
+########################
+2-5-20-10
+
+NN structure:
+Layer 0: 841
+Layer 1: 338
+Layer 2: 125
+Layer 3: 20
+Layer 4: 10
+
+Data:10000
+Number of correct: 725
+Number of pictures 1000
+Percentage 72.5
+
+Data:5000
+Number of correct: 624
+Number of pictures 1000
+Percentage 62.4
+
+Data:1000
+Number of correct: 227
+Number of pictures 1000
+Percentage 22.7
+
+
+################################
+
+10,20,200,10
+
+NN structure:
+Layer 0: 841
+Layer 1: 1690
+Layer 2: 500
+Layer 3: 200
+Layer 4: 10
+
+Data:1000
+
+Number of correct: 847
+Number of pictures 1000
+Percentage 84.7
+[Finished in 1062.6s]
+
+
+
+
+###############################
+6-20-50-10
+
+[Finished in 3302.2s]
+Data:10000
+Percentage 91.8
+Percentage 90.1
+
+
+Data:5000
+Percentage 85.8
+
+
+Data:1000
+Percentage 63.0
+
+
+
+###########################
+6-20-50-10
+learningRate = 0.005
+
+[Finished in 18633.0s]
+
+Data:60000
+Percentage 95.6
+Percentage 94.8
+
+
+Data:30000
+Percentage 94.5
+Percentage 95.6
+
+Data:10000
+Percentage 89.4
+Percentage 89.8
