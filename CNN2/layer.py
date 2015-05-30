@@ -92,6 +92,7 @@ class Layer:
 		##### 
 		#### This array is too big! Have no idea how long it should be
 		####
+		#
 		for i in range(0,len(self.weights)):
 			dErr_wrt_dWn.append(0)
 	
@@ -125,7 +126,7 @@ class Layer:
 		#### This array is too big! Have no idea how long it should be
 		####
 		dErr_wrt_dXnm1 = []
-		for i in range(0,1250):
+		for i in range(0,self.prevLayer.numNeurons):
 			dErr_wrt_dXnm1.append(0)
 		
 		i = 0

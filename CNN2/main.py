@@ -585,7 +585,7 @@ def getNetwork():
 	return cnn
 
 
-nn = initNetwork(6,20,50)
+nn = initNetwork(10,40,60)
 trainingSize = 100
 traingNetwork(nn,trainingSize)
 
