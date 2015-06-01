@@ -251,6 +251,7 @@ Data:10000
 Percentage 89.4
 Percentage 89.8
 
+<<<<<<< HEAD
 #########################
 6-50-80-10
 learningRate = 0.001
@@ -269,3 +270,20 @@ Percentage 91.82
 
 Data 5000
 Percentage 87.88
+=======
+
+
+######################
+Learningrate = 0.001
+[Finished in 51169.3s]
+
+
+Data:60000
+Percentage 96.3
+Percentage 95.5
+
+Data:30000
+Percentage 95.4
+
+
+>>>>>>> 88a498cc4e673ec368d84ca5ccf0e4e61776f2c3

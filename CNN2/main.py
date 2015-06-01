@@ -198,15 +198,15 @@ def initNetwork(nk1,nk2,nN3):
 
 
 
-	#
-	# layer three:
-    # This layer is a fully-connected layer
-    # with 100 neurons.  Since it is fully-connected,
-    # each of the 100 neurons in the
-    # layer is connected to all 1250 neurons in
-    # the previous layer.
-    # So, there are 100 neurons and 100*(1250+1)=125100 weights
-	#
+	"""
+	layer three:
+    This layer is a fully-connected layer
+    with 100 neurons.  Since it is fully-connected,
+    each of the 100 neurons in the
+    layer is connected to all 1250 neurons in
+    the previous layer.
+    So, there are 100 neurons and 100*(1250+1)=125100 weights
+	"""
 	
 	numWeightsThree = numNeuronsThree*(numNeuronsTwo+1)
 	
@@ -562,8 +562,6 @@ def getNetworkImage(nn,number):
 
 
 
-
-
 #
 # Visualises the network
 #
@@ -586,8 +584,9 @@ def getNetwork():
 
 
 nn = initNetwork(10,40,60)
-trainingSize = 100
-traingNetwork(nn,trainingSize)
+
+trainingSize = 10000
+#traingNetwork(nn,trainingSize)
 
 
 testNetwork(nn,trainingSize,1000)
