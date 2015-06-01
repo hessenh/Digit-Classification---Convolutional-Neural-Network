@@ -250,3 +250,19 @@ Percentage 95.6
 Data:10000
 Percentage 89.4
 Percentage 89.8
+
+
+
+######################
+Learningrate = 0.001
+[Finished in 51169.3s]
+
+
+Data:60000
+Percentage 96.3
+Percentage 95.5
+
+Data:30000
+Percentage 95.4
+
+
